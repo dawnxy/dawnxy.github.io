@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="cookie HTTP1.0中协议是无状态的，但在WEB应用中，在多个请求之间共享会话是非常必要的，所以出现了Cookiecookie是为了辩别用户身份，进行会话跟踪而存储在客户端上的数据  cookie的处理流程 第一次客户端向服务器发送请求 服务器通过响应头的Set-Cookie向客户端种植cookie 客户端再向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cookie与session">
+<meta property="og:url" content="http://xuya.site/2017/01/23/cookie与session/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="cookie HTTP1.0中协议是无状态的，但在WEB应用中，在多个请求之间共享会话是非常必要的，所以出现了Cookiecookie是为了辩别用户身份，进行会话跟踪而存储在客户端上的数据  cookie的处理流程 第一次客户端向服务器发送请求 服务器通过响应头的Set-Cookie向客户端种植cookie 客户端再向服务器发送请求时，带上Cookie请求头 服务器通过读取请求头中的Cookie并">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:43:41.732Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cookie与session">
+<meta name="twitter:description" content="cookie HTTP1.0中协议是无状态的，但在WEB应用中，在多个请求之间共享会话是非常必要的，所以出现了Cookiecookie是为了辩别用户身份，进行会话跟踪而存储在客户端上的数据  cookie的处理流程 第一次客户端向服务器发送请求 服务器通过响应头的Set-Cookie向客户端种植cookie 客户端再向服务器发送请求时，带上Cookie请求头 服务器通过读取请求头中的Cookie并">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2017/01/23/cookie与session/"/>
+
+
+
+
+
+  <title>cookie与session | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2017/01/23/cookie与session/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">cookie与session</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-23T18:44:20+08:00">
+                2017-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node/" itemprop="url" rel="index">
+                    <span itemprop="name">Node</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h1><blockquote>
+<p>HTTP1.0中协议是无状态的，但在WEB应用中，在多个请求之间共享会话是非常必要的，所以出现了Cookie<br>cookie是为了辩别用户身份，进行会话跟踪而存储在客户端上的数据</p>
+</blockquote>
+<h2 id="cookie的处理流程"><a href="#cookie的处理流程" class="headerlink" title="cookie的处理流程"></a>cookie的处理流程</h2><ul>
+<li>第一次客户端向服务器发送请求</li>
+<li>服务器通过响应头的Set-Cookie向客户端种植cookie</li>
+<li>客户端再向服务器发送请求时，带上Cookie请求头</li>
+<li>服务器通过读取请求头中的Cookie并进行相应</li>
+</ul>
+<h2 id="cookie原理"><a href="#cookie原理" class="headerlink" title="cookie原理"></a>cookie原理</h2><ul>
+<li>种植cookie</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">'Set-Cookie'</span>,<span class="string">"name=zfpx"</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取cookie</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//req.headers.cookie  获取到的形式==》visit=5; name=zfpx，所以要转化为对象</span></span><br><span class="line">querystring.parse(req.headers.cookie,<span class="string">'; '</span>,<span class="string">'='</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="案例-根据cookie判断用户第几次访问当前页面"><a href="#案例-根据cookie判断用户第几次访问当前页面" class="headerlink" title="案例-根据cookie判断用户第几次访问当前页面"></a>案例-根据cookie判断用户第几次访问当前页面</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">var</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> urlObj = <span class="built_in">require</span>(<span class="string">'url'</span>).parse(req.url);</span><br><span class="line">    <span class="keyword">var</span> pathname = urlObj.pathname;</span><br><span class="line">    <span class="comment">//当客户端请求路径为/write时，服务器向客户端种植cookie</span></span><br><span class="line">    <span class="keyword">if</span>(pathname ==<span class="string">'/visit'</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> cookie=req.headers.cookie;</span><br><span class="line">        <span class="keyword">var</span> visitVal=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(cookie)&#123;<span class="comment">//不是第一次访问</span></span><br><span class="line">            visitVal = querystring.parse(cookie,<span class="string">'; '</span>,<span class="string">'='</span>)[<span class="string">'visit'</span>];</span><br><span class="line">            visitVal++;</span><br><span class="line">        &#125;</span><br><span class="line">        res.setHeader(<span class="string">'Set-Cookie'</span>,<span class="string">"visit="</span>+visitVal);<span class="comment">//种植cookie</span></span><br><span class="line">        res.end(<span class="string">'欢迎第'</span>+visitVal+<span class="string">'次访问'</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.end(<span class="string">'404'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(<span class="number">8080</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="express使用cookie"><a href="#express使用cookie" class="headerlink" title="express使用cookie"></a>express使用cookie</h2><ul>
+<li>引用第三方中间件cookie-parser</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> cookieParser=<span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line">app.use(cookieParser());</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>种植cookie</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>,<span class="string">'zfpx'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取cookie</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">req.cookies</span><br></pre></td></tr></table></figure>
+<h2 id="案例-express统计用户第几次访问当前页面"><a href="#案例-express统计用户第几次访问当前页面" class="headerlink" title="案例-express统计用户第几次访问当前页面"></a>案例-express统计用户第几次访问当前页面</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app=express();</span><br><span class="line"><span class="keyword">var</span> cookieParser=<span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line">app.use(cookieParser());</span><br><span class="line">app.get(<span class="string">'/visit'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.cookie(<span class="string">'visit'</span>,<span class="built_in">isNaN</span>(req.cookies.visit)?<span class="number">1</span>:<span class="built_in">parseInt</span>(req.cookies.visit)+<span class="number">1</span>);</span><br><span class="line">    res.send(req.cookies.visit);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">80</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="cookie的重要属性"><a href="#cookie的重要属性" class="headerlink" title="cookie的重要属性"></a>cookie的重要属性</h2><p>res.cookie([key],[value],{domain|path|expires|maxAge|httpOnly});<br>//第三个参数是个对象，用来规定cookie种植的条件</p>
+<ul>
+<li><p>domain==&gt;域名</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>,<span class="string">'zfpx'</span>,&#123;<span class="attr">domain</span>:<span class="string">'a.zfpx.cn'</span>&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>path==&gt;路径</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>,<span class="string">'zfpx'</span>,&#123;<span class="attr">path</span>:<span class="string">'/read'</span>&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>expires==&gt;过期时间</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>,<span class="string">'zfpx'</span>,&#123;<span class="attr">expires</span>:<span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.now()+<span class="number">10</span>*<span class="number">1000</span>)&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>maxAge==&gt;有效时间</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>,<span class="string">'zfpx'</span>,&#123;<span class="attr">maxAge</span>:<span class="number">10</span>*<span class="number">1000</span>&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>httpOnly==&gt;不允许js访问cookie</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">res.cookie(<span class="string">'name'</span>,<span class="string">'zfpx'</span>,&#123;<span class="attr">httpOnly</span>:<span class="literal">true</span>&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="使用cookie的注意事项"><a href="#使用cookie的注意事项" class="headerlink" title="使用cookie的注意事项"></a>使用cookie的注意事项</h2><ul>
+<li>可能被客户端篡改，使用前验证合法性</li>
+<li>不要存储敏感数据，比如用户密码，账户余额</li>
+<li>使用httpOnly保证安全</li>
+<li>尽量减少cookie的体积</li>
+<li>设置正确的domain和path，减少数据传输</li>
+</ul>
+<h1 id="session"><a href="#session" class="headerlink" title="session"></a>session</h1><blockquote>
+<p>session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而session保存在服务器上</p>
+</blockquote>
+<p>客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上，这就是session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了</p>
+<h2 id="session的原理-基于cookie"><a href="#session的原理-基于cookie" class="headerlink" title="session的原理(基于cookie)"></a>session的原理(基于cookie)</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*需求：</span></span><br><span class="line"><span class="comment">* 第一次光临，送一张100元理发卡</span></span><br><span class="line"><span class="comment">* 第二次光临，余额90..</span></span><br><span class="line"><span class="comment">* 第三次光临，余额80..</span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line"><span class="keyword">var</span> express=<span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser=<span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"><span class="keyword">var</span> app=express();</span><br><span class="line">app.use(cookieParser());</span><br><span class="line">    </span><br><span class="line"><span class="keyword">const</span> SESSION_KEY=<span class="string">'connect.sid'</span>;<span class="comment">//定义常量</span></span><br><span class="line"><span class="keyword">var</span> sessions=&#123;&#125;;<span class="comment">//在内存开辟一段区域</span></span><br><span class="line">app.get(<span class="string">'/visit'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">req,res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> sessionId=req.cookies[SESSION_KEY];<span class="comment">//sessionId其实就是卡号</span></span><br><span class="line">    <span class="keyword">if</span>(sessionId)&#123;<span class="comment">//如果有卡号，表示是老顾客</span></span><br><span class="line">        <span class="comment">//通过卡号把卡号对应的对象从sessions对象取出来</span></span><br><span class="line">        <span class="keyword">var</span> sessionObj=sessions[sessionId];</span><br><span class="line">        <span class="comment">//在原来基础上减去10元</span></span><br><span class="line">        sessionObj.balance-=<span class="number">10</span>;</span><br><span class="line">        res.end(<span class="string">'欢迎您再次光临，您卡里的余额还剩'</span>+sessionObj.balance+<span class="string">"元"</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;<span class="comment">//如果没有卡号，新顾客，办卡</span></span><br><span class="line">        <span class="comment">//卡号要求是唯一的，并且不容易被猜到</span></span><br><span class="line">        sessionId=<span class="string">''</span>+<span class="built_in">Date</span>.now()+<span class="built_in">Math</span>.random();<span class="comment">//变成字符串</span></span><br><span class="line">        sessions[sessionId]=&#123;<span class="attr">balance</span>:<span class="number">100</span>&#125;;<span class="comment">//在服务器端记录此卡号对应的信息</span></span><br><span class="line">        res.cookie(SESSION_KEY,sessionId);<span class="comment">//把此卡号通过cookie发送给客户端</span></span><br><span class="line">        res.end(<span class="string">'欢迎你初次光临，送你一张100元理发卡'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">80</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="express中session的使用"><a href="#express中session的使用" class="headerlink" title="express中session的使用"></a>express中session的使用</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express=<span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">//1、引入第三方中间件express-session</span></span><br><span class="line"><span class="keyword">var</span> session=<span class="built_in">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line"><span class="keyword">var</span> app=express();</span><br><span class="line">    </span><br><span class="line"><span class="comment">//2、使用express-session</span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">    resave:<span class="literal">true</span>,<span class="comment">//每次访问服务器，重新保存session</span></span><br><span class="line">    saveUninitialized:<span class="literal">true</span>,<span class="comment">//保存未初始化的session</span></span><br><span class="line">    secret:<span class="string">'zfpx'</span><span class="comment">//用来加密cookie</span></span><br><span class="line">&#125;));<span class="comment">//一般来说，中间件模块导出对象都是一个函数，调用它可以返回一个中间件函数</span></span><br><span class="line">    </span><br><span class="line">app.get(<span class="string">'/write'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">req,res</span>) </span>&#123;</span><br><span class="line">    req.session.username=<span class="string">'zfpx'</span>;<span class="comment">//赋值</span></span><br><span class="line">    res.end(<span class="string">'write'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/read'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">req,res</span>) </span>&#123;</span><br><span class="line">    res.send(req.session.username);<span class="comment">//取值</span></span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">80</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="cookie与session区别"><a href="#cookie与session区别" class="headerlink" title="cookie与session区别"></a>cookie与session区别</h1><ul>
+<li>cookie数据存放在客户的浏览器上，session数据放在服务器上。</li>
+<li>cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗 考虑到安全应当使用session</li>
+<li>session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能 考虑到减轻服务器性能方面,应当使用COOKIE</li>
+<li>单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie<br>`</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/20/DOM事件/" rel="next" title="DOM事件对象，DOM0&DOM2，事件兼容性处理">
+                <i class="fa fa-chevron-left"></i> DOM事件对象，DOM0&DOM2，事件兼容性处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/28/express的使用/" rel="prev" title="express的使用">
+                express的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cookie"><span class="nav-number">1.</span> <span class="nav-text">cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie的处理流程"><span class="nav-number">1.1.</span> <span class="nav-text">cookie的处理流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie原理"><span class="nav-number">1.2.</span> <span class="nav-text">cookie原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例-根据cookie判断用户第几次访问当前页面"><span class="nav-number">1.3.</span> <span class="nav-text">案例-根据cookie判断用户第几次访问当前页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#express使用cookie"><span class="nav-number">1.4.</span> <span class="nav-text">express使用cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例-express统计用户第几次访问当前页面"><span class="nav-number">1.5.</span> <span class="nav-text">案例-express统计用户第几次访问当前页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie的重要属性"><span class="nav-number">1.6.</span> <span class="nav-text">cookie的重要属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用cookie的注意事项"><span class="nav-number">1.7.</span> <span class="nav-text">使用cookie的注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#session"><span class="nav-number">2.</span> <span class="nav-text">session</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#session的原理-基于cookie"><span class="nav-number">2.1.</span> <span class="nav-text">session的原理(基于cookie)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#express中session的使用"><span class="nav-number">2.2.</span> <span class="nav-text">express中session的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cookie与session区别"><span class="nav-number">3.</span> <span class="nav-text">cookie与session区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

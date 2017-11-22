@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="对于其他语言来说，如C,C++,需要开发者手动的来跟踪内存，而JS的垃圾回收机制使得JS开发人员无需再关系内存的情况，所有的内存分配以及回收都会由垃圾回收器自动完成，执行环境会对执行过程中占有的内存负责。其原理就是找出那些不在被使用的变量，然后释放其所占有的内存。回收器一般是按照固定的时间间隔或者预设的时间进行处理的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存释放">
+<meta property="og:url" content="http://xuya.site/2016/12/22/内存释放/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="对于其他语言来说，如C,C++,需要开发者手动的来跟踪内存，而JS的垃圾回收机制使得JS开发人员无需再关系内存的情况，所有的内存分配以及回收都会由垃圾回收器自动完成，执行环境会对执行过程中占有的内存负责。其原理就是找出那些不在被使用的变量，然后释放其所占有的内存。回收器一般是按照固定的时间间隔或者预设的时间进行处理的。 常见的垃圾回收机制：  标记清除标记清除简单的来说就是给各个变量名打上 YES">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:43:41.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内存释放">
+<meta name="twitter:description" content="对于其他语言来说，如C,C++,需要开发者手动的来跟踪内存，而JS的垃圾回收机制使得JS开发人员无需再关系内存的情况，所有的内存分配以及回收都会由垃圾回收器自动完成，执行环境会对执行过程中占有的内存负责。其原理就是找出那些不在被使用的变量，然后释放其所占有的内存。回收器一般是按照固定的时间间隔或者预设的时间进行处理的。 常见的垃圾回收机制：  标记清除标记清除简单的来说就是给各个变量名打上 YES">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2016/12/22/内存释放/"/>
+
+
+
+
+
+  <title>内存释放 | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2016/12/22/内存释放/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内存释放</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-22T18:44:20+08:00">
+                2016-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对于其他语言来说，如C,C++,需要开发者手动的来跟踪内存，而JS的垃圾回收机制使得JS开发人员无需再关系内存的情况，所有的内存分配以及回收都会由垃圾回收器自动完成，执行环境会对执行过程中占有的内存负责。其原理就是找出那些不在被使用的变量，然后释放其所占有的内存。回收器一般是按照固定的时间间隔或者预设的时间进行处理的。</p>
+<p>常见的垃圾回收机制：</p>
+<ul>
+<li>标记清除<br>标记清除简单的来说就是给各个变量名打上 YES or NO的标签以供JS引擎进行处理（当然打什么标签自己理解即可）。在和执行上下文类似的的环境中当变量名称进入环境的时候，那么变量会被打上 YES。一般来说是绝对不会释放被打上 YES 标签的变量内存的，一旦变量在出了该环境时，变会被打上 NO 标签（和作用域貌似有点像），JS引擎会在一定时间间隔或者设置的时间来进行扫描，对NO标签的进行剔除以释放其内存。</li>
+<li>引用计数<br>我们开个内存，当我们引用了它，就在内存中记录一个数,增加一个引用浏览器就把这个数+1，减少一个引用，浏览器就把这个数-1…当减到零的时候浏览器就把这个内存释放了;但是有些情况下(尤其是IE)记着记着就弄乱了，内存就不能释放了–&gt;浏览器的内存泄露</li>
+</ul>
+<p>除了一些极老版本的IE，目前市面上的JS引擎基本采用标记清除来除了垃圾回收。但是需要注意的是IE中的DOM由于机制问题，是采用了引用计数的方式，所以会有循环引用的问题</p>
+<p>解决方法其实也很简单，当所有的代码完毕末尾处只需要对变量进行 null 赋值即可。</p>
+<h1 id="堆内存释放"><a href="#堆内存释放" class="headerlink" title="堆内存释放"></a>堆内存释放</h1><p>引用类型在定义的时候首先都会开辟一个堆内存，堆内存有一个引用的地址，如果外面有变量或者对象属性等知道了这个地址，我们就说这个内存被占用了，就不能销毁了。<br>我们想要让堆内存释放/销毁，只需要把所有引用它的变量或者对象属性主动赋值为null即可，如果当前的堆内存没有任何东西被占用了，那么浏览器会在空闲的时候把它销毁。</p>
+<h1 id="栈内存释放"><a href="#栈内存释放" class="headerlink" title="栈内存释放"></a>栈内存释放</h1><p>全局作用域：只有当页面关闭的时候，才会销毁<br>私有作用域：只有当函数执行时才会产生私有作用域<br>一般情况下，函数执行会形成一个新的私有的作用域，当私有作用域当中的代码执行完成后，当前作用域都会主动进行释放和销毁，但是还是存在特殊情况，当前私有作用域中的部分内存被作用域以外的东西占用了，那么当前这个作用域就不能销毁了</p>
+<ul>
+<li><p>函数执行返回了一个引用数据类型的值，并且在函数的外面被一个变量或对象的属性所占用，这种情况下，一般形成的私有作用域都不会被销毁</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> num=<span class="number">100</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> f=fn();<span class="comment">//fn执行结果是引用数据类型，被变量f占用，所以形成的私有作用域不能被销毁</span></span><br><span class="line"><span class="built_in">document</span>.body.xxx=fn();<span class="comment">//fn执行结果是引用数据类型，被body对象的xxx属性占用，所以形成的私有作用域也不能被销毁</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DOM对象的事件属性占用函数执行之后的返回的引用数据类型值，那么也符合作用域不被释放的情况(第一种情况的特殊情况)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">div1.onclick = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> num=<span class="number">0</span>;<span class="comment">//num=1 num=2 num=3 num=4....  因为这个作用域不被释放，所以num的值也被保留下来了</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">        num++;</span><br><span class="line">        <span class="built_in">console</span>.log(num);<span class="comment">//1 2 3 4 ....</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line">方法二（推荐）：</span><br><span class="line">;(<span class="function"><span class="keyword">function</span> (<span class="params">num</span>)</span>&#123;</span><br><span class="line">    div1.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;<span class="comment">//也是作用域不被释放的情况（div1.onclick可以理解为全局下对象的属性）</span></span><br><span class="line">        num++;</span><br><span class="line">        <span class="built_in">console</span>.log(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下述情况属于不立即销毁：函数执行返回的函数立刻执行，所以暂时不销毁，但是当返回的值执行完成后，浏览器会在空闲的时候把它销毁</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> num=<span class="number">100</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fn()();<span class="comment">//首先执行一个fn，返回一个小函数对应的内存地址，然后紧接着让返回的小函数再次执行</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="内存释放综合实例"><a href="#内存释放综合实例" class="headerlink" title="内存释放综合实例"></a>内存释放综合实例</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">m</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(n+m++);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> f1=fn(<span class="number">10</span>);<span class="comment">//fn第一次执行，形成一个私有作用域</span></span><br><span class="line">f1(<span class="number">12</span>);<span class="comment">//22  作用域不释放</span></span><br><span class="line">f1(<span class="number">13</span>);<span class="comment">//24  作用域不释放</span></span><br><span class="line"><span class="keyword">var</span> f2=fn(<span class="number">13</span>);<span class="comment">//fn第二次执行，形成一个新的私有作用域</span></span><br><span class="line">f2(<span class="number">12</span>);<span class="comment">//25  作用域不释放</span></span><br><span class="line">f2(<span class="number">13</span>);<span class="comment">//27  作用域不释放</span></span><br><span class="line">fn(<span class="number">12</span>)(<span class="number">13</span>);<span class="comment">//25   fn第三次执行，形成一个新的私有作用域，作用域暂时不释放，执行完成后释放</span></span><br><span class="line">fn(<span class="number">12</span>)(<span class="number">13</span>);<span class="comment">//25   fn第四次执行，形成一个新的私有作用域，作用域暂时不释放，执行完成后释放</span></span><br></pre></td></tr></table></figure>
+<p>注：函数每次执行都会形成一个新的私有作用域，而这些作用域之间没有任何关系。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/18/深入了解CSS3新特性/" rel="next" title="深入了解CSS3新特性">
+                <i class="fa fa-chevron-left"></i> 深入了解CSS3新特性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/28/面向对象和继承/" rel="prev" title="面向对象和继承">
+                面向对象和继承 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆内存释放"><span class="nav-number">1.</span> <span class="nav-text">堆内存释放</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#栈内存释放"><span class="nav-number">2.</span> <span class="nav-text">栈内存释放</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存释放综合实例"><span class="nav-number">3.</span> <span class="nav-text">内存释放综合实例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

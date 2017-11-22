@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="JSON与JSONP JSON是一种数据交换格式 而JSONP是一种依靠开发人员的聪明才智创造出的一种非官方跨域数据交互协议  同源与非同源如果你请求数据的地址跟当前页面的地址，协议，域名，端口号，全部一致，就是同源，如果有一个不一致，就是非同源 跨域的方式 jsonp(最常用的方式)借用&amp;lt;script&">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨域及JSONP的原理">
+<meta property="og:url" content="http://xuya.site/2017/02/03/跨域及JSONP的原理/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="JSON与JSONP JSON是一种数据交换格式 而JSONP是一种依靠开发人员的聪明才智创造出的一种非官方跨域数据交互协议  同源与非同源如果你请求数据的地址跟当前页面的地址，协议，域名，端口号，全部一致，就是同源，如果有一个不一致，就是非同源 跨域的方式 jsonp(最常用的方式)借用&amp;lt;script&amp;gt;标签的无跨域限制漏洞，来达到与第三方通讯的目的 window.namewindow">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:43:40.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="跨域及JSONP的原理">
+<meta name="twitter:description" content="JSON与JSONP JSON是一种数据交换格式 而JSONP是一种依靠开发人员的聪明才智创造出的一种非官方跨域数据交互协议  同源与非同源如果你请求数据的地址跟当前页面的地址，协议，域名，端口号，全部一致，就是同源，如果有一个不一致，就是非同源 跨域的方式 jsonp(最常用的方式)借用&amp;lt;script&amp;gt;标签的无跨域限制漏洞，来达到与第三方通讯的目的 window.namewindow">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2017/02/03/跨域及JSONP的原理/"/>
+
+
+
+
+
+  <title>跨域及JSONP的原理 | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2017/02/03/跨域及JSONP的原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">跨域及JSONP的原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-03T18:44:20+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="JSON与JSONP"><a href="#JSON与JSONP" class="headerlink" title="JSON与JSONP"></a>JSON与JSONP</h1><blockquote>
+<p>JSON是一种数据交换格式</p>
+<p>而JSONP是一种依靠开发人员的聪明才智创造出的一种非官方跨域数据交互协议</p>
+</blockquote>
+<h1 id="同源与非同源"><a href="#同源与非同源" class="headerlink" title="同源与非同源"></a>同源与非同源</h1><p>如果你请求数据的地址跟当前页面的地址，协议，域名，端口号，全部一致，就是同源，如果有一个不一致，就是非同源</p>
+<h1 id="跨域的方式"><a href="#跨域的方式" class="headerlink" title="跨域的方式"></a>跨域的方式</h1><ul>
+<li>jsonp(最常用的方式)<br>借用<code>&lt;script&gt;</code>标签的无跨域限制漏洞，来达到与第三方通讯的目的</li>
+<li>window.name<br>window 对象的name属性是一个很特别的属性，当该window的location变化，然后重新加载，它的name属性可以依然保持不变。那么我们可以在页面 A中用iframe加载其他域的页面B，而页面B中用JavaScript把需要传递的数据赋值给window.name，iframe加载完成之后，页面A修改iframe的地址，将其变成同域的一个地址，然后就可以读出window.name的值了。这个方式非常适合单向的数据请求，而且协议简单、安全。不会像JSONP那样不做限制地执行外部脚本。</li>
+<li>document.domain<br>通过修改document的domain属性，我们可以在域和子域或者不同的子域之间通信。同域策略认为域和子域隶属于不同的域，比如www.a.com和 sub.a.com是不同的域，这时，我们无法在www.a.com下的页面中调用sub.a.com中定义的JavaScript方法。但是当我们把它们document的domain属性都修改为a.com，浏览器就会认为它们处于同一个域下，那么我们就可以互相调用对方的method来通信了。</li>
+<li>window.postMessage<br>window.postMessage是HTML5定义的一个很新的方法，这个方法可以很方便地跨window通信。由于它是一个很新的方法，所以在很旧和比较旧的浏览器中都无法使用。</li>
+</ul>
+<h1 id="JSONP的原理"><a href="#JSONP的原理" class="headerlink" title="JSONP的原理"></a>JSONP的原理</h1><p>很简单，就是利用<code>&lt;script&gt;</code>标签没有跨域限制的“漏洞”（历史遗迹啊）来达到与第三方通讯的目的。当需要通讯时，本站脚本创建一个<code>&lt;script&gt;</code>元素，地址指向第三方的API网址，形如：<br><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://www.example.net/api?wd=z&amp;callback=fn"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>并提供一个回调函数来接收数据（函数名可约定，或通过地址参数传递）。<br>第三方产生的响应为json数据的包装（故称之为jsonp，即json padding），形如：<br>fn({“name”:”hax”,”gender”:”Male”})<br>这样浏览器会调用callback函数，并传递解析后json对象作为参数</p>
+<h2 id="使用原生js进行jsonp跨域请求"><a href="#使用原生js进行jsonp跨域请求" class="headerlink" title="使用原生js进行jsonp跨域请求:"></a>使用原生js进行jsonp跨域请求:</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;script src=<span class="string">"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=z&amp;cb=fn"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><ul>
+<li>创建一个函数</li>
+<li>增加一个script标签，在src中引入请求数据的接口地址，通过问号传参形式，传递一个回调函数来接收数据，让浏览器帮我们发送请求 &amp;wb=z&amp;cb=fn  cb是一个标识，一般服务器中定义的标识是callback，但是也可以按照约定来命名，百度中是”cb”</li>
+<li>客户端的浏览器接收到返回的结果  ==&gt;函数名(数据内容)</li>
+</ul>
+<h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h3><ul>
+<li>接收客户端的请求，解析传递的URL参数</li>
+<li>根据传递的参数到数据库中获取与用户输入的关键词相匹配的数据</li>
+<li>把获取的结果返回给浏览器  fn({q:”z”,p:false,s:[“知乎”,”直播吧”,”支付宝”,”在线翻译”,”中国银行”,”智联招聘”,”战旗tv”,”中国知网”,”招商银行”,”真正男子汉第二季”]})</li>
+</ul>
+<h2 id="使用jQuery进行jsonp跨域请求"><a href="#使用jQuery进行jsonp跨域请求" class="headerlink" title="使用jQuery进行jsonp跨域请求"></a>使用jQuery进行jsonp跨域请求</h2><p>项目中通常这样用<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    url:<span class="string">"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=z"</span>,</span><br><span class="line">    type:<span class="string">"get"</span>,<span class="comment">//jsonp都是get请求，jquery默认就把缓存清掉了</span></span><br><span class="line">    dataType:<span class="string">"jsonp"</span>,</span><br><span class="line">    jsonp:<span class="string">"cb"</span>,<span class="comment">//把callback变为cb,jQ中默认是callback</span></span><br><span class="line">    jsonpCallback:<span class="string">"fn"</span><span class="comment">//把随机函数名变为fn</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/02/HTML5新增标签和属性/" rel="next" title="HTML5新增标签和属性">
+                <i class="fa fa-chevron-left"></i> HTML5新增标签和属性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/03/Babel入门教程/" rel="prev" title="Babel入门教程">
+                Babel入门教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JSON与JSONP"><span class="nav-number">1.</span> <span class="nav-text">JSON与JSONP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同源与非同源"><span class="nav-number">2.</span> <span class="nav-text">同源与非同源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跨域的方式"><span class="nav-number">3.</span> <span class="nav-text">跨域的方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSONP的原理"><span class="nav-number">4.</span> <span class="nav-text">JSONP的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用原生js进行jsonp跨域请求"><span class="nav-number">4.1.</span> <span class="nav-text">使用原生js进行jsonp跨域请求:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">4.1.1.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器端"><span class="nav-number">4.1.2.</span> <span class="nav-text">服务器端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用jQuery进行jsonp跨域请求"><span class="nav-number">4.2.</span> <span class="nav-text">使用jQuery进行jsonp跨域请求</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

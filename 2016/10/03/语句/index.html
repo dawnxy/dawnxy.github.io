@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="js语句包括：条件语句和循环语句 JavaScript条件语句if语句if判断中()内的表达式，返回值是布尔类型，if判断可以用在所有的js判断中语法：//if if(条件)&amp;#123;     条件成立执行的语句 &amp;#125;//if-else if(条件)&amp;#123;     条件成立执行的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中的语句">
+<meta property="og:url" content="http://xuya.site/2016/10/03/语句/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="js语句包括：条件语句和循环语句 JavaScript条件语句if语句if判断中()内的表达式，返回值是布尔类型，if判断可以用在所有的js判断中语法：//if if(条件)&amp;#123;     条件成立执行的语句 &amp;#125;//if-else if(条件)&amp;#123;     条件成立执行的语句 &amp;#125;else&amp;#123;     条件不成立执行的语句 &amp;#125;//if-else i">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:43:40.155Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript中的语句">
+<meta name="twitter:description" content="js语句包括：条件语句和循环语句 JavaScript条件语句if语句if判断中()内的表达式，返回值是布尔类型，if判断可以用在所有的js判断中语法：//if if(条件)&amp;#123;     条件成立执行的语句 &amp;#125;//if-else if(条件)&amp;#123;     条件成立执行的语句 &amp;#125;else&amp;#123;     条件不成立执行的语句 &amp;#125;//if-else i">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2016/10/03/语句/"/>
+
+
+
+
+
+  <title>JavaScript中的语句 | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2016/10/03/语句/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript中的语句</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-03T18:44:20+08:00">
+                2016-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>js语句包括：<code>条件语句</code>和<code>循环语句</code></p>
+<h1 id="JavaScript条件语句"><a href="#JavaScript条件语句" class="headerlink" title="JavaScript条件语句"></a>JavaScript条件语句</h1><h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><p>if判断中()内的表达式，返回值是布尔类型，if判断可以用在所有的js判断中<br><strong>语法</strong>：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//if</span></span><br><span class="line"> <span class="keyword">if</span>(条件)&#123;</span><br><span class="line">     条件成立执行的语句</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//if-else</span></span><br><span class="line"> <span class="keyword">if</span>(条件)&#123;</span><br><span class="line">     条件成立执行的语句</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     条件不成立执行的语句</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//if-else if-else</span></span><br><span class="line"> <span class="keyword">if</span>(条件<span class="number">1</span>)&#123;</span><br><span class="line">     条件<span class="number">1</span>成立执行的语句</span><br><span class="line"> &#125;<span class="keyword">else</span> <span class="keyword">if</span>(条件<span class="number">2</span>)&#123;</span><br><span class="line">     条件<span class="number">1</span>不成立，条件<span class="number">2</span>成立执行的语句</span><br><span class="line"> &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     条件<span class="number">1</span>和条件<span class="number">2</span>都不成立执行的语句</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h2><p>switch只能进行===判断(绝对判断)<br><strong>语法</strong>：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">switch</span>(a)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        执行代码块<span class="number">1</span></span><br><span class="line">        <span class="keyword">break</span>;<span class="comment">//如果不加break，后面的语句也会执行，不管条件是否成立</span></span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        执行代码块<span class="number">2</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        执行代码块<span class="number">3</span>(a与<span class="keyword">case</span> <span class="number">1</span>和<span class="keyword">case</span> <span class="number">2</span>不匹配时执行的代码)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="三目运算符"><a href="#三目运算符" class="headerlink" title="三目运算符"></a>三目运算符</h2><p>三目运算又称之为三元运算<br><strong>语法</strong>：   声明 变量=（条件）?条件为true时执行的代码：条件为false时执行的代码<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span>==<span class="string">''</span>?<span class="built_in">console</span>.log(<span class="string">'成立'</span>):<span class="built_in">console</span>.log(<span class="string">'不成立'</span>);<span class="comment">//成立</span></span><br></pre></td></tr></table></figure></p>
+<p>如果没有不成立时执行的代码，可以使用void 0进行占位<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span>==<span class="string">''</span>?<span class="built_in">console</span>.log(<span class="string">'成立'</span>):<span class="keyword">void</span> <span class="number">0</span>;<span class="comment">//成立</span></span><br></pre></td></tr></table></figure></p>
+<p>如果执行多条js代码，可以放在一个括号内，中间用逗号隔开<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span>==<span class="string">''</span>?(<span class="built_in">console</span>.log(<span class="string">'成立'</span>),<span class="built_in">console</span>.log(<span class="string">'万岁'</span>)):<span class="built_in">console</span>.log(<span class="string">'不成立'</span>);<span class="comment">//成立，万岁</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="JavaScript循环语句"><a href="#JavaScript循环语句" class="headerlink" title="JavaScript循环语句"></a>JavaScript循环语句</h1><h2 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h2><p>循环代码块一定的次数<br><strong>语法</strong>：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (语句<span class="number">1</span>;语句<span class="number">2</span>;语句<span class="number">3</span>)</span><br><span class="line">&#123;</span><br><span class="line">	语句<span class="number">4</span>（要执行的代码块）</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>语句1：设定初始值,将初始值放在一个变量中<br>语句2：设定循环范围（如果在范围内，返回true，进行下一轮循环，如果超出指定范围，返回false，循环结束）<br>语句4：执行循环体中的代码 用{}包起来的是循环体<br>语句3：进行初始值的累加操作<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> i=<span class="number">0</span>,len=cars.length;</span><br><span class="line"><span class="keyword">for</span> (; i&lt;len; )<span class="comment">//语句1可以放到外面，语句3可以放到循环体中</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">document</span>.write(cars[i] + <span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">	i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h2><p>当指定的条件为 true 时循环指定的代码块<br><strong>语法</strong>：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(条件)&#123;</span><br><span class="line">    只要条件成立，就执行这里的代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="do-while循环"><a href="#do-while循环" class="headerlink" title="do-while循环"></a>do-while循环</h2><p>当指定的条件为 true 时循环指定的代码块<br><strong>语法</strong>：<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">	不管条件是否成立，先执行一次</span><br><span class="line">&#125;<span class="keyword">while</span>(条件)</span><br></pre></td></tr></table></figure></p>
+<h2 id="for-in循环"><a href="#for-in循环" class="headerlink" title="for-in循环"></a>for-in循环</h2><p>循环遍历对象的属性<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> attr <span class="keyword">in</span> obj)&#123;</span><br><span class="line">    <span class="comment">//key--&gt;属性名   obj--&gt;要遍历的对象</span></span><br><span class="line">    <span class="comment">//obj[attr]--&gt;对象的值  注意：key是个变量，一定不能加引号</span></span><br><span class="line">    <span class="built_in">console</span>.log(obj[attr]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/01/JavaScript简介和基本概念/" rel="next" title="JavaScript简介和基本概念">
+                <i class="fa fa-chevron-left"></i> JavaScript简介和基本概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/04/运算符/" rel="prev" title="操作符">
+                操作符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript条件语句"><span class="nav-number">1.</span> <span class="nav-text">JavaScript条件语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#if语句"><span class="nav-number">1.1.</span> <span class="nav-text">if语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch语句"><span class="nav-number">1.2.</span> <span class="nav-text">switch语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三目运算符"><span class="nav-number">1.3.</span> <span class="nav-text">三目运算符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript循环语句"><span class="nav-number">2.</span> <span class="nav-text">JavaScript循环语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#for循环"><span class="nav-number">2.1.</span> <span class="nav-text">for循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while循环"><span class="nav-number">2.2.</span> <span class="nav-text">while循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#do-while循环"><span class="nav-number">2.3.</span> <span class="nav-text">do-while循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-in循环"><span class="nav-number">2.4.</span> <span class="nav-text">for-in循环</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

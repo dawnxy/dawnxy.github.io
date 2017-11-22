@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是Babel?  Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。  这意味着，你可以现在就用ES6编写程序，而不用担心现有环境是否支持。下面是一个例子。 // 转码前input.map(item =&amp;gt; item + 1);    // 转码后input.map(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Babel入门教程">
+<meta property="og:url" content="http://xuya.site/2017/02/03/Babel入门教程/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="什么是Babel?  Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。  这意味着，你可以现在就用ES6编写程序，而不用担心现有环境是否支持。下面是一个例子。 // 转码前input.map(item =&amp;gt; item + 1);    // 转码后input.map(function (item) &amp;#123;  return item + 1;&amp;#12">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:41:43.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Babel入门教程">
+<meta name="twitter:description" content="什么是Babel?  Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。  这意味着，你可以现在就用ES6编写程序，而不用担心现有环境是否支持。下面是一个例子。 // 转码前input.map(item =&amp;gt; item + 1);    // 转码后input.map(function (item) &amp;#123;  return item + 1;&amp;#12">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2017/02/03/Babel入门教程/"/>
+
+
+
+
+
+  <title>Babel入门教程 | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2017/02/03/Babel入门教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Babel入门教程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-03T18:44:20+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Babel/" itemprop="url" rel="index">
+                    <span itemprop="name">Babel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>什么是Babel?</p>
+<blockquote>
+<p>Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。</p>
+</blockquote>
+<p>这意味着，你可以现在就用ES6编写程序，而不用担心现有环境是否支持。下面是一个例子。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 转码前</span></span><br><span class="line">input.map(<span class="function"><span class="params">item</span> =&gt;</span> item + <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 转码后</span></span><br><span class="line">input.map(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> item + <span class="number">1</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面的原始代码用了箭头函数，这个特性还没有得到广泛支持，Babel将其转为普通函数，就能在现有的JavaScript环境执行了。</p>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>Babel的配置文件是.babelrc，存放在项目的根目录下。使用Babel的第一步，就是配置这个文件。<br>该文件用来设置转码规则和插件，基本格式如下。</p>
+<p>presets字段设定转码规则，官方提供以下的规则集，你可以根据需要安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ES2015转码规则</span></span><br><span class="line">$ npm install --save-dev babel-preset-es2015</span><br><span class="line">    </span><br><span class="line"><span class="comment"># react转码规则</span></span><br><span class="line">$ npm install --save-dev babel-preset-react</span><br><span class="line">    </span><br><span class="line"><span class="comment"># ES7不同阶段语法提案的转码规则（共有4个阶段），选装一个</span></span><br><span class="line">$ npm install --save-dev babel-preset-stage-0</span><br><span class="line">$ npm install --save-dev babel-preset-stage-1</span><br><span class="line">$ npm install --save-dev babel-preset-stage-2</span><br><span class="line">$ npm install --save-dev babel-preset-stage-3</span><br></pre></td></tr></table></figure>
+<p>然后，将这些规则加入.babelrc。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">    <span class="string">"es2015"</span>,</span><br><span class="line">    <span class="string">"react"</span>,</span><br><span class="line">    <span class="string">"stage-2"</span></span><br><span class="line">],</span><br><span class="line">    <span class="string">"plugins"</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，以下所有Babel工具和模块的使用，都必须先写好.babelrc。</p>
+<h1 id="命令行转码babel-cli"><a href="#命令行转码babel-cli" class="headerlink" title="命令行转码babel-cli"></a>命令行转码babel-cli</h1><p>Babel提供babel-cli工具，用于命令行转码。</p>
+<p>它的安装命令如下。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install --global babel-cli</span><br></pre></td></tr></table></figure>
+<p>基本用法如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 转码结果输出到标准输出</span></span><br><span class="line">$ babel example.js</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 转码结果写入一个文件</span></span><br><span class="line"><span class="comment"># --out-file 或 -o 参数指定输出文件</span></span><br><span class="line">$ babel example.js --out-file compiled.js</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">$ babel example.js -o compiled.js</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 整个目录转码</span></span><br><span class="line"><span class="comment"># --out-dir 或 -d 参数指定输出目录</span></span><br><span class="line">$ babel src --out-dir lib</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">$ babel src -d lib</span><br><span class="line">    </span><br><span class="line"><span class="comment"># -s 参数生成source map文件</span></span><br><span class="line">$ babel src -d lib -s</span><br></pre></td></tr></table></figure>
+<p>上面代码是在全局环境下，进行Babel转码。这意味着，如果项目要运行，全局环境必须有Babel，也就是说项目产生了对环境的依赖。另一方面，这样做也无法支持不同项目使用不同版本的Babel。</p>
+<p>一个解决办法是将babel-cli安装在项目之中。</p>
+<p>然后，改写package.json。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  // ...</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"babel-cli"</span>: <span class="string">"^6.0.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"build"</span>: <span class="string">"babel src -d lib"</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>转码的时候，就执行下面的命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm run build</span><br></pre></td></tr></table></figure>
+<h1 id="babel-node"><a href="#babel-node" class="headerlink" title="babel-node"></a>babel-node</h1><p>babel-cli工具自带一个babel-node命令，提供一个支持ES6的REPL环境。它支持Node的REPL环境的所有功能，而且可以直接运行ES6代码。</p>
+<p>它不用单独安装，而是随babel-cli一起安装。然后，执行babel-node就进入PEPL环境。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ babel-node</span><br><span class="line">&gt; (x =&gt; x * 2)(1)</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<p>babel-node命令可以直接运行ES6脚本。将上面的代码放入脚本文件es6.js，然后直接运行。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ babel-node es6.js</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<p>babel-node也可以安装在项目中。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install --save-dev babel-cli</span><br></pre></td></tr></table></figure>
+<p>然后，改写package.json。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"script-name"</span>: <span class="string">"babel-node script.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，使用babel-node替代node，这样script.js本身就不用做任何转码处理。</p>
+<h1 id="浏览器环境"><a href="#浏览器环境" class="headerlink" title="浏览器环境"></a>浏览器环境</h1><p>Babel也可以用于浏览器环境。但是，从Babel 6.0开始，不再直接提供浏览器版本，而是要用构建工具构建出来。如果你没有或不想使用构建工具，可以通过安装5.x版本的babel-core模块获取。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install babel-core@5</span><br></pre></td></tr></table></figure>
+<p>运行上面的命令以后，就可以在当前目录的node_modules/babel-core/子目录里面，找到babel的浏览器版本browser.js（未精简）和browser.min.js（已精简）。</p>
+<p>然后，将下面的代码插入网页。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">"node_modules/babel-core/browser.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</span><br><span class="line"><span class="comment">// Your ES6 code</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面代码中，browser.js是Babel提供的转换器脚本，可以在浏览器运行。用户的ES6脚本放在script标签之中，但是要注明type=”text/babel”。</p>
+<p>另一种方法是使用babel-standalone模块提供的浏览器版本，将其插入网页。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</span><br><span class="line"><span class="comment">// Your ES6 code</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意，网页中实时将ES6代码转为ES5，对性能会有影响。生产环境需要加载已经转码完成的脚本。</p>
+<p>下面是如何将代码打包成浏览器可以使用的脚本，以Babel配合Browserify为例。首先，安装babelify模块。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install --save-dev babelify babel-preset-es2015</span><br></pre></td></tr></table></figure>
+<p>然后，再用命令行转换ES6脚本。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$  browserify script.js -o bundle.js \</span><br><span class="line">  -t [ babelify --presets [ es2015 react ] ]</span><br></pre></td></tr></table></figure>
+<p>上面代码将ES6脚本script.js，转为bundle.js，浏览器直接加载后者就可以了。</p>
+<p>在package.json设置下面的代码，就不用每次命令行都输入参数了。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">“browserify”: &#123;</span><br><span class="line">“transform”: [[“babelify”, &#123; “presets”: [“es2015”] &#125;]]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="在线转换"><a href="#在线转换" class="headerlink" title="在线转换"></a>在线转换</h1><p>Babel提供一个REPL在线编译器，可以在线将ES6代码转为ES5代码。转换后的代码，可以直接作为ES5代码插入网页运行。`</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/03/跨域及JSONP的原理/" rel="next" title="跨域及JSONP的原理">
+                <i class="fa fa-chevron-left"></i> 跨域及JSONP的原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/08/AngularJS基础/" rel="prev" title="AngularJS基础">
+                AngularJS基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件"><span class="nav-number">1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令行转码babel-cli"><span class="nav-number">2.</span> <span class="nav-text">命令行转码babel-cli</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#babel-node"><span class="nav-number">3.</span> <span class="nav-text">babel-node</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#浏览器环境"><span class="nav-number">4.</span> <span class="nav-text">浏览器环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在线转换"><span class="nav-number">5.</span> <span class="nav-text">在线转换</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="transform变换2D变换 rotate()旋转  单位deg正–&amp;gt;顺时针旋转  负–&amp;gt;逆时针旋转transform-origin 旋转的基点 skew()倾斜  单位deg一个参数：水平倾斜的度数  两个参数（x,y）水平方向：正–&amp;gt;往左，负–&amp;gt;往右垂直方向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS3中的变形，过渡及动画">
+<meta property="og:url" content="http://xuya.site/2016/11/25/CSS3中的变形，过渡及动画/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="transform变换2D变换 rotate()旋转  单位deg正–&amp;gt;顺时针旋转  负–&amp;gt;逆时针旋转transform-origin 旋转的基点 skew()倾斜  单位deg一个参数：水平倾斜的度数  两个参数（x,y）水平方向：正–&amp;gt;往左，负–&amp;gt;往右垂直方向：正–&amp;gt;往下，负–&amp;gt;往上 scale()缩放  默认值是1  1放大一个参数表示水平和垂直的缩放倍数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:43:41.138Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS3中的变形，过渡及动画">
+<meta name="twitter:description" content="transform变换2D变换 rotate()旋转  单位deg正–&amp;gt;顺时针旋转  负–&amp;gt;逆时针旋转transform-origin 旋转的基点 skew()倾斜  单位deg一个参数：水平倾斜的度数  两个参数（x,y）水平方向：正–&amp;gt;往左，负–&amp;gt;往右垂直方向：正–&amp;gt;往下，负–&amp;gt;往上 scale()缩放  默认值是1  1放大一个参数表示水平和垂直的缩放倍数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2016/11/25/CSS3中的变形，过渡及动画/"/>
+
+
+
+
+
+  <title>CSS3中的变形，过渡及动画 | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2016/11/25/CSS3中的变形，过渡及动画/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CSS3中的变形，过渡及动画</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-25T18:44:20+08:00">
+                2016-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS3/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS3</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="transform变换"><a href="#transform变换" class="headerlink" title="transform变换"></a>transform变换</h1><h2 id="2D变换"><a href="#2D变换" class="headerlink" title="2D变换"></a>2D变换</h2><ul>
+<li>rotate()<br>旋转  单位deg<br>正–&gt;顺时针旋转  负–&gt;逆时针旋转<br>transform-origin 旋转的基点</li>
+<li>skew()<br>倾斜  单位deg<br>一个参数：水平倾斜的度数  两个参数（x,y）<br>水平方向：正–&gt;往左，负–&gt;往右<br>垂直方向：正–&gt;往下，负–&gt;往上</li>
+<li>scale()<br>缩放  默认值是1  <1缩小>1放大<br>一个参数表示水平和垂直的缩放倍数  两个参数(x,y)</1缩小></li>
+<li>translate()<br>平移  默认值 0px<br>一个参数 表示在x轴上移动的距离  两个参数（x,y）<br>X轴  正–&gt;往右  负–&gt;往左<br>Y轴  正–&gt;往下  负–&gt;往上<br>注意：</li>
+<li>rotate()  skew()  scale()基准点可以改变，但translate()基准点不能改变，它的基准点永远是中心点</li>
+<li>transform: translate(100px) rotate(45deg);<br>这几个方法可以写在一起，但是，如果不希望变形的基准点发生改变，则把translate这个方法写在最后</li>
+</ul>
+<h2 id="3D变换"><a href="#3D变换" class="headerlink" title="3D变换"></a>3D变换</h2><ul>
+<li>transform-style<br>变换类型（2D还是3D）<br>flat（默认）|preserve-3d(3d空间里展示)</li>
+<li>perspective<br>开启景深效果 近大远小的效果<br>作用在祖先元素（包含父标签）用户到物体Z轴平面的距离<br>2000px（一般设置在800px-2000px）<br>transform:perspective(800px)  直接作用在变形元素上<br>注意：<br>1&gt;.当有很多个变形元素时，通过perspective设置的所有的变形元素的效果会有差异<br>2&gt;.而通过transform:perspective(300px)设置的每个变形元素的效果都一样</li>
+<li>perspective-origin<br>透视点的位置<br>默认是元素的中心点 center</li>
+</ul>
+<p><strong>transform 新增函数</strong>：</p>
+<ul>
+<li><p>translate3d( tx , ty, tz )<br>translateX()    translateY()   translateZ()==》在Z轴上移动的距离，往前移动是正值，往后移动是负值</p>
+</li>
+<li><p>rotate3d( rx , ry , rz，a)//rx,ry,rz是向量坐标，a是角度<br>rotateX()   rotateY()   rotateZ()<br>rotateX  围绕X轴旋转  正–&gt;往前翻  负–&gt;往后翻<br>rotateY  围绕Y轴旋转  正–&gt;往右翻  负–&gt;往左翻<br>rotateZ  围绕Z轴旋转  等同于rotate()方法，但是是在Z轴上旋转:transform:rotate(0,0,1.45deg)</p>
+</li>
+<li><p>scale3d( sx , sy , sz)<br>scaleX()     scaleY()     scaleZ()</p>
+</li>
+</ul>
+<p><strong>注意</strong>：<br>在项目中我们一般这样写：<br>transform: translate3d(0,0,-500px);//开启硬件GPU加速功能，减少动画的卡顿，闪烁，迟疑等现象</p>
+<p><strong>关于方向的总结</strong>：</p>
+<blockquote>
+<p>从箭头方向开始看，顺时针是正，逆时针是负<br>箭头那头为正，另外一头为负</p>
+<ul>
+<li>X轴  从左向右的箭头  左负 右正</li>
+<li>Y轴  从上往下的箭头  上负 下正</li>
+<li>Z轴  从里向外的箭头  外正  内负</li>
+</ul>
+</blockquote>
+<h2 id="transform实例"><a href="#transform实例" class="headerlink" title="transform实例"></a>transform实例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"img/baby.jpg"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span> <span class="selector-tag">img</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">transition</span>: <span class="number">1s</span>;</span><br><span class="line">    <span class="attribute">-webkit-transition</span>: <span class="number">1s</span>;</span><br><span class="line">    <span class="attribute">-ms-transition</span>: <span class="number">1s</span>;</span><br><span class="line">    <span class="attribute">-moz-transition</span>: <span class="number">1s</span>;</span><br><span class="line">    <span class="attribute">-o-transition</span>: <span class="number">1s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span><span class="selector-pseudo">:hover</span> <span class="selector-tag">img</span>&#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(1.5);</span><br><span class="line">    <span class="attribute">-webkit-transform</span>: <span class="built_in">scale</span>(1.5);</span><br><span class="line">    <span class="attribute">-ms-transform</span>: <span class="built_in">scale</span>(1.5);</span><br><span class="line">    <span class="attribute">-moz-transform</span>: <span class="built_in">scale</span>(1.5);</span><br><span class="line">    <span class="attribute">-o-transform</span>: <span class="built_in">scale</span>(1.5);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="transition过渡"><a href="#transition过渡" class="headerlink" title="transition过渡"></a>transition过渡</h1><blockquote>
+<p>当CSS属性值发生改变时，由起始值向结束值实现平滑过渡的动画效果</p>
+</blockquote>
+<ul>
+<li>只有两种状态，起始状态和结束状态</li>
+<li>过渡动画效果起作用需要通过CSS（伪类，媒体查询），js等触发（目的是为了改变CSS属性值）</li>
+</ul>
+<h2 id="transition细分属性-4个"><a href="#transition细分属性-4个" class="headerlink" title="transition细分属性(4个)"></a>transition细分属性(4个)</h2><ul>
+<li>transition-property:all（默认值）|具体css属性   过渡属性</li>
+<li>transition-duration  过渡时间  （必设）</li>
+<li>transition-delay  延迟时间</li>
+<li>transition-timing-function:<br>ease(减速 默认值)<br>ease-in(加速)<br>ease-out(减速)<br>ease-in-out(先加速后减速)  linear(匀速)<br>贝塞尔曲线网址: cubic-bezier.com</li>
+</ul>
+<h2 id="transition复合写法"><a href="#transition复合写法" class="headerlink" title="transition复合写法"></a>transition复合写法</h2><p>transition: width 1s 1s ease,height 2s 2s linear;<br>如果只是transition-property不一样，其他的过渡时间，延迟时间，动画类型都一样<br>transition: all 1s 1s ease;</p>
+<h2 id="动画效果三部曲"><a href="#动画效果三部曲" class="headerlink" title="动画效果三部曲"></a>动画效果三部曲</h2><ul>
+<li>确定过渡属性</li>
+<li>找到过渡属性的起始值和结束值</li>
+<li>添加transition属性</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background</span>: green;</span><br><span class="line">    <span class="attribute">-webkit-transition</span>: width <span class="number">1s</span> <span class="number">1s</span> ease,height <span class="number">2s</span> <span class="number">2s</span> linear;</span><br><span class="line">    <span class="attribute">transition</span>: width <span class="number">1s</span> <span class="number">1s</span> ease,height <span class="number">2s</span> <span class="number">2s</span> linear;<span class="comment">/*写在这里，离开的时候，还会回到初始状态*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box1</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">    <span class="attribute">-webkit-transition</span>: width <span class="number">1s</span> <span class="number">1s</span> ease,height <span class="number">2s</span> <span class="number">2s</span> linear;</span><br><span class="line">    <span class="attribute">transition</span>: width <span class="number">1s</span> <span class="number">1s</span> ease,height <span class="number">2s</span> <span class="number">2s</span> linear;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>transition添加在伪类上还是元素上transition执行的次数不一样，添加在伪类上执行两次，添加在元素上执行一次</li>
+<li>pc端页面：写5种 -webkit-  -ms-  -o-  -moz-，移动端页面：写两种 -webkit-  标准</li>
+</ul>
+<h2 id="transitionend"><a href="#transitionend" class="headerlink" title="transitionend"></a>transitionend</h2><blockquote>
+<p>动画结束以后触发的事件</p>
+</blockquote>
+<p>transitionend|webkitTransitionEnd|mozTransitionEnd|msTransitionEnd<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> oDiv2=<span class="built_in">document</span>.getElementById(<span class="string">"box2"</span>);</span><br><span class="line">oDiv2.addEventListener(<span class="string">'webkitTransitionEnd'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'动画结束'</span>);</span><br><span class="line">&#125;,<span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="transition实例"><a href="#transition实例" class="headerlink" title="transition实例"></a>transition实例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">150px</span>;</span><br><span class="line">    <span class="attribute">margin</span>:<span class="number">100px</span> auto;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">150px</span>;</span><br><span class="line">    <span class="attribute">background</span>: lightsalmon;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">40px</span> transparent;</span><br><span class="line">    <span class="attribute">transition</span>: <span class="number">1s</span>;</span><br><span class="line">    <span class="attribute">-webkit-transition</span>: <span class="number">0.5s</span>;</span><br><span class="line">    <span class="attribute">-ms-transition</span>: <span class="number">0.5s</span>;</span><br><span class="line">    <span class="attribute">-o-transition</span>: <span class="number">0.5s</span>;</span><br><span class="line">    <span class="attribute">-moz-transition</span>: <span class="number">0.5s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="animation动画"><a href="#animation动画" class="headerlink" title="animation动画"></a>animation动画</h1><p><strong>帧动画与过渡动画的区别</strong>？<br>帧动画弥补了过渡动画的缺点</p>
+<ul>
+<li>帧动画可以设置任意个状态，而过渡动画只有起始状态和结束状态</li>
+<li>不需要触发条件</li>
+<li>帧动画步骤：<br>1&gt;.通过@keyframes 动画名  声明帧动画  (设置动画运行的轨迹)<br>2&gt;.通过animation属性调用声明的帧动画</li>
+</ul>
+<p>声明帧动画：<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line">@<span class="keyword">keyframes</span> move&#123;</span><br><span class="line">//百分比理解为，在一定时间内，某个时间点设置样式</span><br><span class="line">    0%&#123;//0%可以用from代替</span><br><span class="line">        <span class="selector-tag">css</span>样式</span><br><span class="line">    &#125;</span><br><span class="line">    50%&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    100%&#123;//100%可以用to代替</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实例（移动端写法）：<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"> @<span class="keyword">keyframes</span> move &#123;</span><br><span class="line">    0%&#123; <span class="attribute">transform</span>: <span class="built_in">translate</span>(100px,100px); <span class="attribute">-webkit-transform</span>:<span class="built_in">translate</span>(100px,100px); &#125;</span><br><span class="line">    50%&#123; <span class="attribute">transform</span>: <span class="built_in">translate</span>(250px,250px); <span class="attribute">-webkit-transform</span>: <span class="built_in">translate</span>(250px,250px); &#125;</span><br><span class="line">    100%&#123; <span class="attribute">transform</span>: <span class="built_in">translate</span>(400px,0); <span class="attribute">-webkit-transform</span>: <span class="built_in">translate</span>(400px,0); &#125;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> move &#123;</span><br><span class="line">    0%&#123; <span class="attribute">transform</span>: <span class="built_in">translate</span>(100px,100px); <span class="attribute">-webkit-transform</span>: <span class="built_in">translate</span>(100px,100px); &#125;</span><br><span class="line">    50%&#123; <span class="attribute">transform</span>: <span class="built_in">translate</span>(250px,250px); <span class="attribute">-webkit-transform</span>: <span class="built_in">translate</span>(250px,250px); &#125;</span><br><span class="line">    100%&#123; <span class="attribute">transform</span>: <span class="built_in">translate</span>(400px,0); <span class="attribute">-webkit-transform</span>: <span class="built_in">translate</span>(400px,0); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="animation细分属性-8个"><a href="#animation细分属性-8个" class="headerlink" title="animation细分属性(8个)"></a>animation细分属性(8个)</h2><ul>
+<li>animation-name<br>帧动画名称（必设）</li>
+<li>animation-duration<br>动画执行的时间（必设）</li>
+<li>animation-timing-function<br>ease(减速 默认值)<br>ease-in(加速)<br>ease-out(减速)<br>ease-in-out(先加速后减速)<br>linear(匀速)<br>贝塞尔曲线网址: cubic-bezier.com</li>
+<li>animation-delay<br>动画延迟时间</li>
+<li>animation-iteration-count<br>动画重复次数  1(默认值)|infinite</li>
+<li>animation-direction<br>动画运行的方向<br>normal(默认值)|reverse(反方向)|alternate(交替)|alternate-reverse(反方向交替)</li>
+<li>animation-play-state<br>动画运行的状态<br>running(默认值)|paused(停止)</li>
+<li>animation-fill-mode<br>动画运行结束后的状态<br>none(默认值)|backwards(起始状态)|forwards(最后一帧)|both(根据方向，可能停留在第一帧或者最后一帧)  动画运行结束的状态</li>
+</ul>
+<h2 id="animation复合写法"><a href="#animation复合写法" class="headerlink" title="animation复合写法"></a>animation复合写法</h2><p>animation:move 1s linear 1s 1 reverse both;</p>
+<h2 id="animation实例"><a href="#animation实例" class="headerlink" title="animation实例"></a>animation实例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">62px</span>;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">62px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">"img/yl.png"</span>) no-repeat -<span class="number">90px</span> -<span class="number">3px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">-webkit-animation</span>: shake <span class="number">0.3s</span> infinite both linear;</span><br><span class="line">    <span class="attribute">animation</span>: shake <span class="number">0.3s</span> infinite both linear;</span><br><span class="line">&#125;</span><br><span class="line">@-<span class="keyword">webkit</span>-<span class="keyword">keyframes</span> shake &#123;</span><br><span class="line">     0%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(0deg);<span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg);&#125;</span><br><span class="line">     25%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(-30deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-30deg);&#125;</span><br><span class="line">     50%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(0deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg);&#125;</span><br><span class="line">     75%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(30deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(30deg);&#125;</span><br><span class="line">     100%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(0deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg);&#125;</span><br><span class="line"> &#125;</span><br><span class="line">@<span class="keyword">keyframes</span> shake &#123;</span><br><span class="line">    0%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(0deg);<span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg);&#125;</span><br><span class="line">    25%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(-30deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-30deg);&#125;</span><br><span class="line">    50%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(0deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg);&#125;</span><br><span class="line">    75%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(30deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(30deg);&#125;</span><br><span class="line">    100%&#123; <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(0deg); <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/24/检测数据类型的方式/" rel="next" title="检测数据类型的方式">
+                <i class="fa fa-chevron-left"></i> 检测数据类型的方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/02/预解释/" rel="prev" title="预解释">
+                预解释 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#transform变换"><span class="nav-number">1.</span> <span class="nav-text">transform变换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2D变换"><span class="nav-number">1.1.</span> <span class="nav-text">2D变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D变换"><span class="nav-number">1.2.</span> <span class="nav-text">3D变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transform实例"><span class="nav-number">1.3.</span> <span class="nav-text">transform实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#transition过渡"><span class="nav-number">2.</span> <span class="nav-text">transition过渡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#transition细分属性-4个"><span class="nav-number">2.1.</span> <span class="nav-text">transition细分属性(4个)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transition复合写法"><span class="nav-number">2.2.</span> <span class="nav-text">transition复合写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画效果三部曲"><span class="nav-number">2.3.</span> <span class="nav-text">动画效果三部曲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transitionend"><span class="nav-number">2.4.</span> <span class="nav-text">transitionend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transition实例"><span class="nav-number">2.5.</span> <span class="nav-text">transition实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#animation动画"><span class="nav-number">3.</span> <span class="nav-text">animation动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#animation细分属性-8个"><span class="nav-number">3.1.</span> <span class="nav-text">animation细分属性(8个)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animation复合写法"><span class="nav-number">3.2.</span> <span class="nav-text">animation复合写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animation实例"><span class="nav-number">3.3.</span> <span class="nav-text">animation实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

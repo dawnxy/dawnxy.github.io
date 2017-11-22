@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="js中的操作符包括：  数学操作 赋值操作 比较操作 逻辑操作 条件操作 逗号操作  数学操作数学操作符包括：+  ,-  ,  ,/  ,% ,++ ,–*i++与++i的区别：把整体当做参与操作或输出的值，才有区别i++：先赋值，然后再参与操作（自己加1）++i：先参与操作（自己加1），再赋值var i=1;con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作符">
+<meta property="og:url" content="http://xuya.site/2016/10/04/运算符/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="js中的操作符包括：  数学操作 赋值操作 比较操作 逻辑操作 条件操作 逗号操作  数学操作数学操作符包括：+  ,-  ,  ,/  ,% ,++ ,–*i++与++i的区别：把整体当做参与操作或输出的值，才有区别i++：先赋值，然后再参与操作（自己加1）++i：先参与操作（自己加1），再赋值var i=1;console.log(++i + i++ + ++i + i++);//12cons">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:43:40.721Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作符">
+<meta name="twitter:description" content="js中的操作符包括：  数学操作 赋值操作 比较操作 逻辑操作 条件操作 逗号操作  数学操作数学操作符包括：+  ,-  ,  ,/  ,% ,++ ,–*i++与++i的区别：把整体当做参与操作或输出的值，才有区别i++：先赋值，然后再参与操作（自己加1）++i：先参与操作（自己加1），再赋值var i=1;console.log(++i + i++ + ++i + i++);//12cons">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2016/10/04/运算符/"/>
+
+
+
+
+
+  <title>操作符 | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2016/10/04/运算符/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">操作符</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-04T18:44:20+08:00">
+                2016-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>js中的操作符包括：</p>
+<ul>
+<li>数学操作</li>
+<li>赋值操作</li>
+<li>比较操作</li>
+<li>逻辑操作</li>
+<li>条件操作</li>
+<li>逗号操作</li>
+</ul>
+<h1 id="数学操作"><a href="#数学操作" class="headerlink" title="数学操作"></a>数学操作</h1><p>数学操作符包括：+  ,-  ,<em>  ,/  ,% ,++ ,–<br><em>*i++与++i的区别</em></em>：把整体当做参与操作或输出的值，才有区别<br>i++：先赋值，然后再参与操作（自己加1）<br>++i：先参与操作（自己加1），再赋值<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> i=<span class="number">1</span>;</span><br><span class="line"><span class="built_in">console</span>.log(++i + i++ + ++i + i++);<span class="comment">//12</span></span><br><span class="line"><span class="built_in">console</span>.log(i);<span class="comment">//5</span></span><br><span class="line"><span class="comment">//i: 2 3 4 5</span></span><br><span class="line"><span class="comment">//   2 2 4 4</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="赋值操作"><a href="#赋值操作" class="headerlink" title="赋值操作"></a>赋值操作</h1><p>赋值操作符包括：=  ,+=  ,-= , *=  ,/=  ,%=</p>
+<h1 id="比较操作"><a href="#比较操作" class="headerlink" title="比较操作"></a>比较操作</h1><p>==  ,===  ,!=  ,&gt;  ,&lt;  ,&gt;=  ,&lt;=<br><strong>==与===的区别</strong>：<br>==：等于（值相等）。<br>比较时，如果类型不相等，先转化为同一类型，然后比较，值相等的话，就相等。<br>===：全等于（值和类型都相等）。<br>比较时，先比较类型，如果类型不相等，那么就是不相等<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="string">'123'</span>,b=<span class="number">123</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a==b);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(a===b);<span class="comment">//false</span></span><br></pre></td></tr></table></figure></p>
+<p>null与undefined相等但是不全等<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">console.log(null==undefined);//true</span><br><span class="line">console.log(null===undefined);//false</span><br></pre></td></tr></table></figure></p>
+<h1 id="逻辑操作"><a href="#逻辑操作" class="headerlink" title="逻辑操作"></a>逻辑操作</h1><p>逻辑操作符包括：&amp;&amp;  ,||  ,!<br>&amp;&amp;（逻辑与）：条件都为true时候，才返回true<br>||（逻辑或）：只要有一个条件为true，就返回true<br>!（逻辑非）：先把操作的值转化为布尔值，然后取反</p>
+<h1 id="条件操作"><a href="#条件操作" class="headerlink" title="条件操作"></a>条件操作</h1><p>语法：声明 变量=（条件）?条件为true时执行的代码：条件为false时执行的代码<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">4</span>&gt;<span class="number">6</span>?<span class="number">4</span>:<span class="number">6</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);<span class="comment">//4&gt;6不成立，所以结果是6</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="逗号操作"><a href="#逗号操作" class="headerlink" title="逗号操作"></a>逗号操作</h1><p>使用逗号操作符可以在一条语句中执行多个操作<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num1=<span class="number">1</span>,num2=<span class="number">2</span>,num3=<span class="number">3</span>;</span><br></pre></td></tr></table></figure></p>
+<p>逗号操作符多用于声明多个变量，但除此之外还可以用于赋值，赋值时，会返回表达式中的最后一项<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> num=(<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">8</span>);</span><br><span class="line"><span class="built_in">console</span>.log(num);<span class="comment">//8</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/03/语句/" rel="next" title="JavaScript中的语句">
+                <i class="fa fa-chevron-left"></i> JavaScript中的语句
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/05/Math方法及应用/" rel="prev" title="Math方法及应用">
+                Math方法及应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数学操作"><span class="nav-number">1.</span> <span class="nav-text">数学操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#赋值操作"><span class="nav-number">2.</span> <span class="nav-text">赋值操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#比较操作"><span class="nav-number">3.</span> <span class="nav-text">比较操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑操作"><span class="nav-number">4.</span> <span class="nav-text">逻辑操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#条件操作"><span class="nav-number">5.</span> <span class="nav-text">条件操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逗号操作"><span class="nav-number">6.</span> <span class="nav-text">逗号操作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

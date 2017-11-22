@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是DOM？  DOM(Document Object Model)，即文档对象模型，是描述html关系的图谱  js可以通过操作html的DOM来获取、修改、删除、增加DOM对象 DOM获取元素的方法通过ID名获取var obj=document.getElementById(&apos;id名&apos;);  ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOM操作及DOM库">
+<meta property="og:url" content="http://xuya.site/2016/12/30/DOM操作及DOM库/index.html">
+<meta property="og:site_name" content="Xu Ya blog">
+<meta property="og:description" content="什么是DOM？  DOM(Document Object Model)，即文档对象模型，是描述html关系的图谱  js可以通过操作html的DOM来获取、修改、删除、增加DOM对象 DOM获取元素的方法通过ID名获取var obj=document.getElementById(&apos;id名&apos;);  id在文件中独一无二，所以获取范围只能是整个文档（document） 如果id名在同一页面出现两次或">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-22T12:43:40.473Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DOM操作及DOM库">
+<meta name="twitter:description" content="什么是DOM？  DOM(Document Object Model)，即文档对象模型，是描述html关系的图谱  js可以通过操作html的DOM来获取、修改、删除、增加DOM对象 DOM获取元素的方法通过ID名获取var obj=document.getElementById(&apos;id名&apos;);  id在文件中独一无二，所以获取范围只能是整个文档（document） 如果id名在同一页面出现两次或">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2016/12/30/DOM操作及DOM库/"/>
+
+
+
+
+
+  <title>DOM操作及DOM库 | Xu Ya blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Xu Ya blog</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2016/12/30/DOM操作及DOM库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DOM操作及DOM库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-30T18:44:20+08:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>什么是DOM？</p>
+<blockquote>
+<p>DOM(Document Object Model)，即文档对象模型，是描述html关系的图谱</p>
+</blockquote>
+<p>js可以通过操作html的DOM来获取、修改、删除、增加DOM对象</p>
+<h1 id="DOM获取元素的方法"><a href="#DOM获取元素的方法" class="headerlink" title="DOM获取元素的方法"></a>DOM获取元素的方法</h1><h2 id="通过ID名获取"><a href="#通过ID名获取" class="headerlink" title="通过ID名获取"></a>通过ID名获取</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=<span class="built_in">document</span>.getElementById(<span class="string">'id名'</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>id在文件中独一无二，所以获取范围只能是整个文档（document）</li>
+<li>如果id名在同一页面出现两次或两次以上，获取到的元素为第一个元素</li>
+<li>在ie6,7中，表单元素的name属性也会被当做id名，所以在ie6,7下，需要单独处理</li>
+<li>在ie6,7中，id名获取时不区分大小写，所以不能通过大小写来区分元素</li>
+<li>可以直接通过元素id名访问（不推荐）</li>
+</ul>
+<p>项目使用中注意：</p>
+<ul>
+<li>不要让表单元素的name和其他元素的id重复</li>
+<li>不要用id大小写来区分不同元素</li>
+</ul>
+<h2 id="通过类名获取"><a href="#通过类名获取" class="headerlink" title="通过类名获取"></a>通过类名获取</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=<span class="built_in">document</span>/context.getElementsClassName(<span class="string">'class名'</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ie6,7,8不支持</li>
+</ul>
+<h2 id="通过标签名获取"><a href="#通过标签名获取" class="headerlink" title="通过标签名获取"></a>通过标签名获取</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=<span class="built_in">document</span>/context.getElementsByTagName(<span class="string">'标签名'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="通过name属性获取"><a href="#通过name属性获取" class="headerlink" title="通过name属性获取"></a>通过name属性获取</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=<span class="built_in">document</span>.getElementsByName(<span class="string">'name名'</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ie6,7,8，只对表单元素起作用</li>
+</ul>
+<h2 id="获取根元素"><a href="#获取根元素" class="headerlink" title="获取根元素"></a>获取根元素</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.documentElement;<span class="comment">//获取html元素</span></span><br><span class="line"><span class="built_in">document</span>.body;<span class="comment">//获取body元素</span></span><br></pre></td></tr></table></figure>
+<h2 id="获取当前页面的宽度和高度"><a href="#获取当前页面的宽度和高度" class="headerlink" title="获取当前页面的宽度和高度"></a>获取当前页面的宽度和高度</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> width=<span class="built_in">document</span>.documentElement.clientWidth||<span class="built_in">document</span>.body.clientWidth;</span><br><span class="line"><span class="keyword">var</span> height=<span class="built_in">document</span>.documentElement.clientHeight||<span class="built_in">document</span>.body.clientHeight;</span><br></pre></td></tr></table></figure>
+<h2 id="移动端获取元素常用的方法"><a href="#移动端获取元素常用的方法" class="headerlink" title="移动端获取元素常用的方法"></a>移动端获取元素常用的方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=<span class="built_in">document</span>.querySelector(<span class="string">"#id"</span>);<span class="comment">//返回指定匹配选择器的第一个元素</span></span><br><span class="line"><span class="keyword">var</span> obj=<span class="built_in">document</span>.querySelectorAll(<span class="string">"input[type='radio']"</span>);<span class="comment">//返回指定匹配选择器的所有元素</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据id获取到的结果是个对象。如果没有获取到，返回结果为null</li>
+<li>根据类名，标签名，name属性获取的结果都是类数组，如果没获取到，返回[]，如果要获取其中某一项：obj[0]/obj.item[0]</li>
+</ul>
+<h1 id="DOM节点和关系属性"><a href="#DOM节点和关系属性" class="headerlink" title="DOM节点和关系属性"></a>DOM节点和关系属性</h1><h2 id="节点关系的属性"><a href="#节点关系的属性" class="headerlink" title="节点关系的属性"></a>节点关系的属性</h2><ul>
+<li><p>childNodes<br>获取所有子节点，不兼容</p>
+</li>
+<li><p>children<br>获取所有元素子节点</p>
+</li>
+<li><p>parentNode<br>获取父亲节点</p>
+</li>
+<li><p>previousSibling<br>获取上一个节点</p>
+</li>
+<li><p>previousElementSibling<br>获取上一个元素节点，不兼容</p>
+</li>
+<li><p>nextSibling<br>获取弟弟节点</p>
+</li>
+<li><p>nextElementSibling<br>获取下一个元素节点，不兼容</p>
+</li>
+<li><p>firstChild<br>获取子节点中的第一个</p>
+</li>
+<li><p>lastChild<br>获取子节点中的最后一个</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">"h1"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"list"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(box.childNodes);<span class="comment">//[text, h1#h1, text, ul#list, text, p#p, text]</span></span><br><span class="line"><span class="built_in">console</span>.log(box.children);<span class="comment">//[h1#h1, ul#list, p#p, h1: h1#h1, list: ul#list, p: p#p]</span></span><br><span class="line"><span class="built_in">console</span>.log(list.parentNode);<span class="comment">//&lt;div id="box"&gt;&lt;h1 id="h1"&gt;&lt;/h1&gt;&lt;ul id="list"&gt;&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p id="p"&gt;&lt;/p&gt;&lt;/div&gt;;</span></span><br><span class="line"><span class="built_in">console</span>.log(list.previousSibling);<span class="comment">//#text</span></span><br><span class="line"><span class="built_in">console</span>.log(list.previousElementSibling);<span class="comment">//&lt;h1 id="h1"&gt;&lt;/h1&gt;</span></span><br><span class="line"><span class="built_in">console</span>.log(list.nextSibling);<span class="comment">//#text</span></span><br><span class="line"><span class="built_in">console</span>.log(list.nextElementSibling);<span class="comment">//&lt;p id="p"&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="built_in">console</span>.log(list.firstChild);<span class="comment">//#text</span></span><br><span class="line"><span class="built_in">console</span>.log(list.lastChild);<span class="comment">//#text</span></span><br></pre></td></tr></table></figure>
+<h2 id="常见节点类型"><a href="#常见节点类型" class="headerlink" title="常见节点类型"></a>常见节点类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">节点类型</th>
+<th style="text-align:center">nodeType</th>
+<th style="text-align:center">nodeName</th>
+<th style="text-align:center">nodeValue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">元素节点（元素标签）</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">大写的标签名</td>
+<td style="text-align:center">null</td>
+</tr>
+<tr>
+<td style="text-align:left">文本节点（文字）</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">#text</td>
+<td style="text-align:center">文字内容</td>
+</tr>
+<tr>
+<td style="text-align:left">注释节点（注释）</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">#comment</td>
+<td style="text-align:center">注释内容</td>
+</tr>
+<tr>
+<td style="text-align:left">document(整个文档)</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">#document</td>
+<td style="text-align:center">null</td>
+</tr>
+</tbody>
+</table>
+<h1 id="DOM增删改查"><a href="#DOM增删改查" class="headerlink" title="DOM增删改查"></a>DOM增删改查</h1><h2 id="createElement"><a href="#createElement" class="headerlink" title="createElement()"></a>createElement()</h2><blockquote>
+<p>创建元素节点</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> oDiv=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="createTextNode"><a href="#createTextNode" class="headerlink" title="createTextNode()"></a>createTextNode()</h2><blockquote>
+<p>创建文本节点</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> textnode=<span class="built_in">document</span>.createTextNode(<span class="string">"文本节点"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="appendChild"><a href="#appendChild" class="headerlink" title="appendChild()"></a>appendChild()</h2><blockquote>
+<p>把新的子节点添加到指定节点内的末尾</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">parent.appendChild([newNode]);</span><br></pre></td></tr></table></figure>
+<h2 id="insertBefore"><a href="#insertBefore" class="headerlink" title="insertBefore()"></a>insertBefore()</h2><blockquote>
+<p>将新的节点添加到已有节点之前</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">parent.insertBefore([newNode],[oldNode]);</span><br></pre></td></tr></table></figure>
+<p>注意：原生js没有insertAfter这个方法</p>
+<h2 id="setAttribute"><a href="#setAttribute" class="headerlink" title="setAttribute()"></a>setAttribute()</h2><blockquote>
+<p>向对象添加一对键值对，即设置属性</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">oDiv.setAttribute([属性名],[属性值]);</span><br></pre></td></tr></table></figure>
+<p>设置的属性会显示在html上</p>
+<h2 id="getAttribute"><a href="#getAttribute" class="headerlink" title="getAttribute()"></a>getAttribute()</h2><blockquote>
+<p>获取属性的值</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">oDiv.getAttribute([属性名]);<span class="comment">//'eat'</span></span><br></pre></td></tr></table></figure>
+<p>关于”.”和Attribute</p>
+<ul>
+<li>如果标签上定义了自定义属性，通过”.”获取不到，但是通过getAttribute能获取到；</li>
+<li>通过”.”设置自定义属性，在标签上看不到；但是通过setAttribute设置自定义属性，标签上可以看到；</li>
+</ul>
+<p>注意事项：<br>. 和 attribute 一定不能混搭；即 通过点设置属性，就通过点来获取属性；<br>通过setAttribute来设置属性，就getAttribute来获取属性；</p>
+<h2 id="removeAttribute"><a href="#removeAttribute" class="headerlink" title="removeAttribute()"></a>removeAttribute()</h2><blockquote>
+<p>删除指定的属性</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">oDiv.removeAttribute([属性名])</span><br></pre></td></tr></table></figure>
+<h2 id="removeChild"><a href="#removeChild" class="headerlink" title="removeChild()"></a>removeChild()</h2><blockquote>
+<p>删除元素</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">parent.removeChild([删除的对象])</span><br></pre></td></tr></table></figure>
+<h2 id="cloneNode"><a href="#cloneNode" class="headerlink" title="cloneNode()"></a>cloneNode()</h2><blockquote>
+<p>克隆元素</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">oDiv.cloneNode(<span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+<p>如果参数为true：是将当前元素下所有的元素克隆一份<br>默认参数为false：只克隆当前元素</p>
+<h2 id="replaceChild"><a href="#replaceChild" class="headerlink" title="replaceChild"></a>replaceChild</h2><blockquote>
+<p>替换元素</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">parent.replaceChild([newNode]，[oldNode])</span><br></pre></td></tr></table></figure>
+<h1 id="DOM库的实现"><a href="#DOM库的实现" class="headerlink" title="DOM库的实现"></a>DOM库的实现</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> utils=(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//getRandom   获取n-m之间的随机数</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getRandom</span>(<span class="params">n,m</span>) </span>&#123;</span><br><span class="line">        n=<span class="built_in">Number</span>(n);</span><br><span class="line">        m=<span class="built_in">Number</span>(m);</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">isNaN</span>(n)||<span class="built_in">isNaN</span>(m))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Math</span>.random();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n&gt;m)&#123;</span><br><span class="line">            <span class="keyword">var</span> temp=n;</span><br><span class="line">            n=m;</span><br><span class="line">            m=temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.round(<span class="built_in">Math</span>.random()*(m-n)+n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//jsonParse   将json字符串转化为json对象</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">jsonParse</span>(<span class="params">jsonStr</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"JSON"</span> <span class="keyword">in</span> <span class="built_in">window</span>?<span class="built_in">JSON</span>.parse(jsonStr):<span class="built_in">eval</span>(<span class="string">"("</span>+jsonStr+<span class="string">")"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//listToArray   将类数组转化为数组</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">listToArray</span>(<span class="params">likeAry</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ary=[];</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            ary=<span class="built_in">Array</span>.prototype.slice.call(likeAry);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (e)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;likeAry.length;i++)&#123;</span><br><span class="line">                ary.push(likeAry[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//offset   获取元素距离body的偏移量（上偏移量/左偏移量）</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">offset</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> totalLeft=<span class="literal">null</span>,totalTop=<span class="literal">null</span>,par=ele.offsetParent;</span><br><span class="line">        totalLeft+=ele.offsetLeft;</span><br><span class="line">        totalTop+=ele.offsetTop;</span><br><span class="line">        <span class="keyword">if</span>(par)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">window</span>.navigator.userAgent.indexOf(<span class="string">"MSIE 8"</span>))&#123;</span><br><span class="line">                totalLeft+=par.clientLeft;</span><br><span class="line">                totalTop+=par.clientTop;</span><br><span class="line">            &#125;</span><br><span class="line">            totalLeft+=par.offsetLeft;</span><br><span class="line">            totalTop+=par.offsetTop;</span><br><span class="line">            par=par.offsetParent;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">left</span>:totalLeft,<span class="attr">top</span>:totalTop&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//win   获取浏览器的属性  clientWidth/clientHeight.scrollLeft/scrollTop</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">win</span>(<span class="params">attr,val</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> val===<span class="string">"undefined"</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">document</span>.documentElement[attr]||<span class="built_in">document</span>.body[attr];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">document</span>.documentElement[attr]=val;</span><br><span class="line">        <span class="built_in">document</span>.body[attr]=val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//getCss  获取元素的样式</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getCss</span>(<span class="params"><span class="regexp">/*ele,*/</span>attr</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> val=<span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">window</span>.getComputedStyle)&#123;<span class="comment">//标准浏览器下getComputedStyle是一个方法，</span></span><br><span class="line">            val=<span class="built_in">window</span>.getComputedStyle(<span class="comment">/*ele*/</span><span class="keyword">this</span>)[attr];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(attr==<span class="string">"opacity"</span>)&#123;</span><br><span class="line">                val=<span class="comment">/*ele*/</span><span class="keyword">this</span>.currentStyle.filter;</span><br><span class="line">                <span class="keyword">var</span> reg=<span class="regexp">/^alpha\(opacity=(\d+(?:\.\d+)?)\)$/</span>;</span><br><span class="line">                val=reg.test(val)?reg.exec(val)[<span class="number">1</span>]/<span class="number">100</span>:<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            val=<span class="comment">/*ele*/</span><span class="keyword">this</span>.currentStyle[attr];<span class="comment">//ie6-8下currentStyle是元素的属性</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> reg=<span class="regexp">/^-?\d+(?:\.\d+)?(?:px|pt|em|rem|deg)?$/</span>;</span><br><span class="line">        <span class="keyword">if</span>(reg.test(val))&#123;</span><br><span class="line">            val=<span class="built_in">parseFloat</span>(val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//setCss    单独设置元素的样式</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setCss</span>(<span class="params"><span class="regexp">/*ele,*/</span>attr,val</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(attr==<span class="string">"opacity"</span>)&#123;</span><br><span class="line">            <span class="comment">/*ele*/</span><span class="keyword">this</span>.style.opacity=val;</span><br><span class="line">            <span class="comment">/*ele*/</span><span class="keyword">this</span>.style.filter=<span class="string">"alpha(opacity="</span>+<span class="number">100</span>*val+<span class="string">")"</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(attr==<span class="string">"float"</span>)&#123;</span><br><span class="line">            <span class="comment">/*ele*/</span><span class="keyword">this</span>.style.cssFloat=val;</span><br><span class="line">            <span class="comment">/*ele*/</span><span class="keyword">this</span>.style.styleFloat=val;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> reg=<span class="regexp">/^(width|height|left|right|top|bottom|(margin|padding)(Left|Right|Top|Bottom)?)$/</span>;</span><br><span class="line">        <span class="keyword">if</span>(reg.test(attr))&#123;</span><br><span class="line">            <span class="keyword">if</span>(!<span class="built_in">isNaN</span>(val))&#123;</span><br><span class="line">                val+=<span class="string">"px"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*ele*/</span><span class="keyword">this</span>.style[attr]=val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//setGroupCss    批量设置元素的样式</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setGroupCss</span>(<span class="params"><span class="regexp">/*ele,*/</span>obj</span>) </span>&#123;</span><br><span class="line">        obj=obj||<span class="number">0</span>;<span class="comment">//设置obj的默认值，保证后面的代码不报错</span></span><br><span class="line">        <span class="keyword">if</span>(obj.toString()===<span class="string">"[object Object]"</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">                setCss.call(<span class="comment">/*ele*/</span><span class="keyword">this</span>,key,obj[key]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//css    获取/设置（单独/批量）元素的样式</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">css</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> secondParamer=<span class="built_in">arguments</span>[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">var</span> thirdParamer=<span class="built_in">arguments</span>[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">var</span> argumentsAry=utils.listToArray(<span class="built_in">arguments</span>).splice(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> secondParamer===<span class="string">"string"</span>)&#123;<span class="comment">//第二个参数为字符串</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">typeof</span> thirdParamer===<span class="string">"undefined"</span>)&#123;<span class="comment">//第三个参数没传</span></span><br><span class="line">                <span class="keyword">return</span> getCss.apply(ele,argumentsAry);<span class="comment">//获取元素的样式</span></span><br><span class="line">            &#125;</span><br><span class="line">            setCss.apply(ele,argumentsAry);<span class="comment">//第三个参数传了，设置一个样式</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        thirdParamer=thirdParamer||<span class="number">0</span>;<span class="comment">//设置默认值，保证第三个参数不传值时不报错</span></span><br><span class="line">        <span class="keyword">if</span>(secondParamer.toString()==<span class="string">"[object Object]"</span>)&#123;<span class="comment">//第三个参数是对象</span></span><br><span class="line">            setGroupCss.apply(ele,argumentsAry);<span class="comment">//设置一组样式</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//getElesByClass    获取指定类名的元素</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getElesByClass</span>(<span class="params">className,context</span>) </span>&#123;</span><br><span class="line">        context=context||<span class="built_in">document</span>;</span><br><span class="line">        <span class="keyword">var</span> eles=context.getElementsByTagName(<span class="string">"*"</span>);</span><br><span class="line">        <span class="keyword">var</span> classNameAry=className.replace(<span class="regexp">/(^ +| +$)/g</span>,<span class="string">""</span>).split(<span class="regexp">/ +/</span>);</span><br><span class="line">        <span class="keyword">var</span> ary=[];</span><br><span class="line">        <span class="comment">//遍历所有元素，如果当前元素的类名中，指定的类名都有，就把当前元素加入空数组中</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;eles.length;i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> curEle=eles[i];</span><br><span class="line">            <span class="keyword">var</span> isPass=<span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;classNameAry.length;j++)&#123;</span><br><span class="line">                <span class="keyword">var</span> curClass=classNameAry[j];</span><br><span class="line">                <span class="keyword">var</span> reg=<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(^| +)"</span>+curClass+<span class="string">"( +|$)"</span>);</span><br><span class="line">                <span class="keyword">if</span>(!reg.test(curEle.className))&#123;</span><br><span class="line">                    isPass=<span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(isPass)&#123;</span><br><span class="line">                ary.push(curEle);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//children    获取所有的元素子节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">children</span>(<span class="params">ele,tagName</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ary=[],nodeList=ele.childNodes;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="regexp">/MSIE (6|7|8)/</span>.test(<span class="built_in">window</span>.navigator.userAgent))&#123;</span><br><span class="line">            ary=<span class="built_in">Array</span>.prototype.slice.call(ele.children);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;nodeList.length;i++)&#123;</span><br><span class="line">                <span class="keyword">var</span> curNode=nodeList[i];</span><br><span class="line">                ary[ary.length]=curNode.nodeType==<span class="number">1</span>?curNode:<span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> tagName==<span class="string">"string"</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;ary.length;j++)&#123;</span><br><span class="line">                <span class="keyword">var</span> curEleNode=ary[j];</span><br><span class="line">                <span class="keyword">if</span>(curEleNode.nodeName.toUpperCase()!==tagName.toUpperCase())&#123;</span><br><span class="line">                    ary.splice(j,<span class="number">1</span>);</span><br><span class="line">                    j--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//prev    获取上一个哥哥元素节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">prev</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(ele.previousElementSibling)&#123;</span><br><span class="line">            <span class="keyword">return</span> ele.previousElementSibling;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> pre=ele.previousSibling;</span><br><span class="line">        <span class="keyword">while</span>(pre&amp;&amp;pre.nodeType!=<span class="number">1</span>)&#123;<span class="comment">//只要哥哥节点存在，并且不是元素节点就继续查找</span></span><br><span class="line">            pre=pre.previousSibling;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//next    获取下一个弟弟元素节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(ele.nextElementSibling)&#123;</span><br><span class="line">            <span class="keyword">return</span> ele.nextElementSibling;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> nex=ele.nextSibling;</span><br><span class="line">        <span class="keyword">while</span>(nex&amp;&amp;nex.nodeType!=<span class="number">1</span>)&#123;</span><br><span class="line">            nex=nex.nextSibling;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nex;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//prevAll    获取所有的哥哥元素节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">prevAll</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ary=[];</span><br><span class="line">        <span class="keyword">var</span> pre=prev(ele);</span><br><span class="line">        <span class="keyword">while</span>(pre)&#123;<span class="comment">//只要哥哥节点存在，就把找到的哥哥节点放到数组开头，并且继续查找上一个哥哥节点</span></span><br><span class="line">            ary.unshift(pre);</span><br><span class="line">            pre=prev(pre);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//nextAll    获取所有的弟弟元素节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">nextAll</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ary=[];</span><br><span class="line">        <span class="keyword">var</span> nex=next(ele);</span><br><span class="line">        <span class="keyword">while</span>(nex)&#123;<span class="comment">//只要弟弟节点存在，就把找到的弟弟节点放到数组末尾，并且继续查找下一个弟弟节点</span></span><br><span class="line">            ary.push(nex);</span><br><span class="line">            nex=next(nex);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//sibling    获取与当前元素相邻的两个元素节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">sibling</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ary=[];</span><br><span class="line">        <span class="keyword">var</span> pre=prev(ele);</span><br><span class="line">        <span class="keyword">var</span> nex=next(ele);</span><br><span class="line">        pre?ary.push(pre):<span class="literal">null</span>;</span><br><span class="line">        nex?ary.push(nex):<span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> ary;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//siblings    获取所有的兄弟元素节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">siblings</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> prevAll(ele).concat(nextAll(ele));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//index    获取当前元素的索引</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> prevAll(ele).length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//firstChild    获取第一个元素子节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">firstChild</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> chs=children(ele);</span><br><span class="line">        <span class="keyword">return</span> chs.length&gt;<span class="number">0</span>?chs[<span class="number">0</span>]:<span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//lastChild    获取最后一个元素子节点</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">lastChild</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> chs=children(ele);</span><br><span class="line">        <span class="keyword">return</span> chs.length&gt;<span class="number">0</span>?chs[chs.length<span class="number">-1</span>]:<span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//append    向指定容器末尾追加元素</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">append</span>(<span class="params">ele,container</span>) </span>&#123;</span><br><span class="line">        container.appendChild(ele);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//prepend    向指定容器开头追加元素</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">prepend</span>(<span class="params">ele,container</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> fir=firstChild(container);</span><br><span class="line">        <span class="keyword">if</span>(fir)&#123;</span><br><span class="line">            container.insertBefore(ele,fir);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        container.appendChild(ele);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//insertBefore  向容器中指定元素开头追加</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">insertBefore</span>(<span class="params">oldEle,newEle</span>) </span>&#123;</span><br><span class="line">        oldEle.parentNode.insertBefore(newEle,oldEle);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//insertAfter    向容器中指定元素末尾追加</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">insertAfter</span>(<span class="params">oldEle,newEle</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> nex=next(oldEle);</span><br><span class="line">        <span class="keyword">if</span>(nex)&#123;</span><br><span class="line">            oldEle.parentNode.insertBefore(newEle,nex);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            oldEle.parentNode.appendChild(newEle);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//hasClass    判断元素是否存在某个样式类名</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasClass</span>(<span class="params">ele,className</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> reg=<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(^| +)"</span>+className+<span class="string">"( +|$)"</span>);</span><br><span class="line">        <span class="keyword">return</span> reg.test(ele.className);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//addClass    给元素添加类名(可以添加多个)</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">ele,className</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ary=className.replace(<span class="regexp">/(^ +| +$)/g</span>,<span class="string">""</span>).split(<span class="regexp">/ +/</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;ary.length;i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> curName=ary[i];</span><br><span class="line">            <span class="keyword">if</span>(!hasClass(ele,curName))&#123;<span class="comment">//如果类名不存在，才添加</span></span><br><span class="line">                ele.className+=<span class="string">" "</span>+curName;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//removeClass  删除元素的类名(可以删除多个)</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeClass</span>(<span class="params">ele,className</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> ary=className.replace(<span class="regexp">/(^ +| +$)/g</span>,<span class="string">""</span>).split(<span class="regexp">/ +/</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;ary.length;i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> curName=ary[i];</span><br><span class="line">            <span class="keyword">if</span>(hasClass(ele,curName))&#123;<span class="comment">//如果类名存在，才删除</span></span><br><span class="line">                <span class="keyword">var</span> reg=<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(^| +)"</span>+curName+<span class="string">"( +|$)"</span>,<span class="string">"g"</span>);</span><br><span class="line">                ele.className=ele.className.replace(reg,<span class="string">" "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        getRandom:getRandom,</span><br><span class="line">        jsonParse:jsonParse,</span><br><span class="line">        listToArray:listToArray,</span><br><span class="line">        offset:offset,</span><br><span class="line">        win:win,</span><br><span class="line">        <span class="comment">/*getCss:getCss,</span></span><br><span class="line"><span class="comment">        setCss:setCss,</span></span><br><span class="line"><span class="comment">        setGroupCss:setGroupCss,*/</span></span><br><span class="line">        css:css,</span><br><span class="line">        getElesByClass:getElesByClass,</span><br><span class="line">        children:children,</span><br><span class="line">        prev:prev,</span><br><span class="line">        next:next,</span><br><span class="line">        prevAll:prevAll,</span><br><span class="line">        nextAll:nextAll,</span><br><span class="line">        sibling:sibling,</span><br><span class="line">        siblings:siblings,</span><br><span class="line">        index:index,</span><br><span class="line">        firstChild:firstChild,</span><br><span class="line">        lastChild:lastChild,</span><br><span class="line">        append:append,</span><br><span class="line">        prepend:prepend,</span><br><span class="line">        insertBefore:insertBefore,</span><br><span class="line">        insertAfter:insertAfter,</span><br><span class="line">        hasClass:hasClass,</span><br><span class="line">        addClass:addClass,</span><br><span class="line">        removeClass:removeClass</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/28/面向对象和继承/" rel="next" title="面向对象和继承">
+                <i class="fa fa-chevron-left"></i> 面向对象和继承
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/03/HTTP相关概念/" rel="prev" title="HTTP相关概念">
+                HTTP相关概念 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM获取元素的方法"><span class="nav-number">1.</span> <span class="nav-text">DOM获取元素的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过ID名获取"><span class="nav-number">1.1.</span> <span class="nav-text">通过ID名获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过类名获取"><span class="nav-number">1.2.</span> <span class="nav-text">通过类名获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过标签名获取"><span class="nav-number">1.3.</span> <span class="nav-text">通过标签名获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过name属性获取"><span class="nav-number">1.4.</span> <span class="nav-text">通过name属性获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取根元素"><span class="nav-number">1.5.</span> <span class="nav-text">获取根元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取当前页面的宽度和高度"><span class="nav-number">1.6.</span> <span class="nav-text">获取当前页面的宽度和高度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动端获取元素常用的方法"><span class="nav-number">1.7.</span> <span class="nav-text">移动端获取元素常用的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM节点和关系属性"><span class="nav-number">2.</span> <span class="nav-text">DOM节点和关系属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#节点关系的属性"><span class="nav-number">2.1.</span> <span class="nav-text">节点关系的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见节点类型"><span class="nav-number">2.2.</span> <span class="nav-text">常见节点类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM增删改查"><span class="nav-number">3.</span> <span class="nav-text">DOM增删改查</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#createElement"><span class="nav-number">3.1.</span> <span class="nav-text">createElement()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#createTextNode"><span class="nav-number">3.2.</span> <span class="nav-text">createTextNode()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#appendChild"><span class="nav-number">3.3.</span> <span class="nav-text">appendChild()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#insertBefore"><span class="nav-number">3.4.</span> <span class="nav-text">insertBefore()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setAttribute"><span class="nav-number">3.5.</span> <span class="nav-text">setAttribute()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getAttribute"><span class="nav-number">3.6.</span> <span class="nav-text">getAttribute()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#removeAttribute"><span class="nav-number">3.7.</span> <span class="nav-text">removeAttribute()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#removeChild"><span class="nav-number">3.8.</span> <span class="nav-text">removeChild()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cloneNode"><span class="nav-number">3.9.</span> <span class="nav-text">cloneNode()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#replaceChild"><span class="nav-number">3.10.</span> <span class="nav-text">replaceChild</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM库的实现"><span class="nav-number">4.</span> <span class="nav-text">DOM库的实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
