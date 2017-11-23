@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="相关文档微信JS-SDK说明文档 ：https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;amp;id=mp1421141115 定制微信，手机QQ，QQ空间APP内的分享内容：http://open.mobile.qq.com/api/component/shar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信分享">
+<meta property="og:url" content="http://xuya.site/2017/11/23/微信分享/index.html">
+<meta property="og:site_name" content="Xu Ya">
+<meta property="og:description" content="相关文档微信JS-SDK说明文档 ：https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;amp;id=mp1421141115 定制微信，手机QQ，QQ空间APP内的分享内容：http://open.mobile.qq.com/api/component/share 微信分享官方常见问题及处理方法：http://blog.sina.com.cn/s/">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-23T07:01:16.251Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信分享">
+<meta name="twitter:description" content="相关文档微信JS-SDK说明文档 ：https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;amp;id=mp1421141115 定制微信，手机QQ，QQ空间APP内的分享内容：http://open.mobile.qq.com/api/component/share 微信分享官方常见问题及处理方法：http://blog.sina.com.cn/s/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xuya.site/2017/11/23/微信分享/"/>
+
+
+
+
+
+  <title>微信分享 | Xu Ya</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xu Ya</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端打怪升级笔记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2017/11/23/微信分享/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xu Ya">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xu Ya">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微信分享</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T18:44:20+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/实战笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">实战笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h1><p>微信JS-SDK说明文档 ：<br><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115" target="_blank" rel="noopener">https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115</a></p>
+<p>定制微信，手机QQ，QQ空间APP内的分享内容：<br><a href="http://open.mobile.qq.com/api/component/share" target="_blank" rel="noopener">http://open.mobile.qq.com/api/component/share</a></p>
+<p>微信分享官方常见问题及处理方法：<br><a href="http://blog.sina.com.cn/s/blog_6c969b4a0102w8h3.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_6c969b4a0102w8h3.html</a></p>
+<h1 id="微信分享代码"><a href="#微信分享代码" class="headerlink" title="微信分享代码"></a>微信分享代码</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;input <span class="class"><span class="keyword">class</span></span>=<span class="string">"actitle"</span> type=<span class="string">"hidden"</span> value=<span class="string">"客户管理，用哇呀"</span> /&gt;</span><br><span class="line">&lt;input <span class="class"><span class="keyword">class</span></span>=<span class="string">"actsummary"</span> type=<span class="string">"hidden"</span> value=<span class="string">"哇呀CRM，专注房抵领域的客户管理系统，助您高效管理客户和订单"</span> /&gt;</span><br><span class="line">&lt;input <span class="class"><span class="keyword">class</span></span>=<span class="string">"actlink"</span> type=<span class="string">"hidden"</span> value=<span class="string">"http://image.wayaa.com/images/sharelogo.png"</span> /&gt;</span><br><span class="line">&lt;input <span class="class"><span class="keyword">class</span></span>=<span class="string">"linkpage"</span> type=<span class="string">"hidden"</span> value=<span class="string">""</span> /&gt;</span><br><span class="line">&lt;input id=<span class="string">"appId"</span> name=<span class="string">"appId"</span> type=<span class="string">"hidden"</span> value=<span class="string">"$&#123;appId&#125;"</span>/&gt;</span><br><span class="line">&lt;input id=<span class="string">"timestamp"</span> name=<span class="string">"timestamp"</span> type=<span class="string">"hidden"</span> value=<span class="string">"$&#123;timestamp&#125;"</span>/&gt;</span><br><span class="line">&lt;input id=<span class="string">"nonceStr"</span> name=<span class="string">"nonceStr"</span> type=<span class="string">"hidden"</span> value=<span class="string">"$&#123;nonceStr&#125;"</span>/&gt;</span><br><span class="line">&lt;input id=<span class="string">"signature"</span> name=<span class="string">"signature"</span> type=<span class="string">"hidden"</span> value=<span class="string">"$&#123;signature&#125;"</span>/&gt;</span><br><span class="line">&lt;input type=<span class="string">"hidden"</span> id=<span class="string">"customerId"</span> value=<span class="string">"$&#123;customerId&#125;"</span> /&gt;</span><br><span class="line">&lt;input type=<span class="string">"hidden"</span> id=<span class="string">"token"</span> value=<span class="string">"$&#123;token&#125;"</span> /&gt;</span><br><span class="line">&lt;input type=<span class="string">"hidden"</span> id=<span class="string">"channel"</span> value=<span class="string">"$&#123;channel&#125;"</span> /&gt;</span><br><span class="line">&lt;script src=<span class="string">"$&#123;jscss_url&#125;/js/myshare.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script src=<span class="string">"http://res.wx.qq.com/open/js/jweixin-1.0.0.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span> </span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"http://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="comment">/*myshare.js*/</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span> <span class="title">share</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> actitle = $(<span class="string">".actitle"</span>).val();<span class="comment">//分享标题</span></span><br><span class="line">    <span class="keyword">var</span> actsummary = $(<span class="string">".actsummary"</span>).val();<span class="comment">//分享内容</span></span><br><span class="line">    <span class="keyword">var</span> actlink = $(<span class="string">".actlink"</span>).val();<span class="comment">//分享logo链接</span></span><br><span class="line">    <span class="keyword">var</span> linkpage = $(<span class="string">".linkpage"</span>).val();<span class="comment">//分享页面链接（该分享连接域名必须与当前页面对应的公众号js安全域名一致）</span></span><br><span class="line">    <span class="keyword">var</span> appId = $(<span class="string">"#appId"</span>).val();</span><br><span class="line">    <span class="keyword">var</span> timestamp = $(<span class="string">"#timestamp"</span>).val();</span><br><span class="line">    <span class="keyword">var</span> nonceStr = $(<span class="string">"#nonceStr"</span>).val();</span><br><span class="line">    <span class="keyword">var</span> signature = $(<span class="string">"#signature"</span>).val();</span><br><span class="line"></span><br><span class="line"><span class="comment">//==&gt;微信内的网页分享</span></span><br><span class="line">    <span class="comment">//通过config接口注入权限验证配置</span></span><br><span class="line">    wx.config(&#123;</span><br><span class="line">        debug: <span class="literal">true</span>,<span class="comment">// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。</span></span><br><span class="line">        appId: appId,<span class="comment">//必填，公众号唯一标识</span></span><br><span class="line">        timestamp: timestamp,<span class="comment">//必填，生成签名时间戳</span></span><br><span class="line">        nonceStr: nonceStr,<span class="comment">//必填，生成签名的随机串</span></span><br><span class="line">        signature: signature,<span class="comment">//必填，签名</span></span><br><span class="line">        jsApiList: [</span><br><span class="line">            <span class="string">"onMenuShareTimeline"</span>,<span class="comment">//分享到朋友圈</span></span><br><span class="line">            <span class="string">"onMenuShareAppMessage"</span>,<span class="comment">//分享给朋友</span></span><br><span class="line">            <span class="string">"onMenuShareQQ"</span>,<span class="comment">//分享到QQ</span></span><br><span class="line">            <span class="string">"onMenuShareWeibo"</span>,<span class="comment">//分享到腾讯微博</span></span><br><span class="line">            <span class="string">"onMenuShareQZone"</span><span class="comment">//分享到QQ空间</span></span><br><span class="line">        ]<span class="comment">//必填，需要使用的JS接口列表</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过ready接口处理成功验证</span></span><br><span class="line">    wx.ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        wx.onMenuShareTimeline(&#123;</span><br><span class="line">            title: actitle,</span><br><span class="line">            link: linkpage,</span><br><span class="line">            imgUrl: actlink,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="comment">//用户确认分享后执行的回调函数</span></span><br><span class="line">            &#125;,</span><br><span class="line">            cancel: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="comment">//用户取消分享后执行的回调函数</span></span><br><span class="line">            &#125;,</span><br><span class="line">            fail: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">                <span class="comment">//用户分享失败后执行的回调函数</span></span><br><span class="line">            &#125;,</span><br><span class="line">            complete: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">                <span class="comment">//用户完成分享后执行的回调函数</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        wx.onMenuShareAppMessage(&#123;</span><br><span class="line">            title: actitle,</span><br><span class="line">            desc: actsummary,</span><br><span class="line">            link: linkpage,</span><br><span class="line">            imgUrl: actlink,</span><br><span class="line">            type: <span class="string">""</span>,</span><br><span class="line">            dataUrl: <span class="string">""</span>,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;&#125;,</span><br><span class="line">            cancel: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        wx.onMenuShareQQ(&#123;</span><br><span class="line">            title: actitle,</span><br><span class="line">            desc: actsummary,</span><br><span class="line">            link: linkpage,</span><br><span class="line">            imgUrl: actlink,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">            cancel: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        wx.onMenuShareWeibo(&#123;</span><br><span class="line">            title: actitle,</span><br><span class="line">            desc: actsummary,</span><br><span class="line">            link: linkpage,</span><br><span class="line">            imgUrl: actlink,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">            cancel: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        wx.onMenuShareQZone(&#123;</span><br><span class="line">            title: actitle,</span><br><span class="line">            desc: actsummary,</span><br><span class="line">            link: linkpage,</span><br><span class="line">            imgUrl: actlink,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">            cancel: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过error接口处理失败验证</span></span><br><span class="line">    wx.error(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。</span></span><br><span class="line">        alert(<span class="built_in">JSON</span>.stringify(res.errMsg))</span><br><span class="line">        <span class="comment">//&#123;"errMsg":"config:invalid url domain"&#125;</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//==&gt;定制微信，手机QQ，QQ空间APP内的分享内容</span></span><br><span class="line">    setShareInfo(&#123;<span class="comment">//</span></span><br><span class="line">        title: actitle,</span><br><span class="line">        summary: actsummary,</span><br><span class="line">        pic: actlink,</span><br><span class="line">        url: linkpage,</span><br><span class="line">        WXconfig: &#123;<span class="comment">//微信权限验证配置信息，若不在微信传播，可忽略</span></span><br><span class="line">            swapTitleInWX: <span class="literal">true</span>,<span class="comment">//是否标题内容互换（仅朋友圈，因朋友圈内只显示标题）</span></span><br><span class="line">            appId: appId,</span><br><span class="line">            timestamp: timestamp,</span><br><span class="line">            nonceStr: nonceStr,</span><br><span class="line">            signature: signature</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ul>
+<li>用了setShareInfo之后，wx.onMenuShareTimeline等等，无论分享成功还是失败都不执行回调，并且debug开启模式在手机上没有alert提示，只在pc有log信息</li>
+<li>注释掉setShareInfo之后,开启debug模式，调用的所有api的返回值会在客户端alert出来</li>
+<li>由于手机QQ限制，分享URL必须与页面URL同一域名，否则设置不生效。</li>
+<li>可根据当前页面的客户端环境，判断是否需要WX配置，减少不必要请求。</li>
+<li>图片大小要大于300pix才能显示；</li>
+</ul>
+<h1 id="分享失败的可能原因"><a href="#分享失败的可能原因" class="headerlink" title="分享失败的可能原因"></a>分享失败的可能原因</h1><p>wx.error排查</p>
+<ul>
+<li>后台参数是否传了</li>
+<li>分享id是否正确，有没有变动</li>
+<li>分享文案是否有敏感词汇</li>
+<li>分享域名是否与公众号功能设置的js安全域名一致，一个公众号绑定三个域名，否则重新申请公众号</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/表单验证相关/" rel="next" title="表单验证相关">
+                <i class="fa fa-chevron-left"></i> 表单验证相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Xu Ya</p>
+              <p class="site-description motion-element" itemprop="description">分享前端技术</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相关文档"><span class="nav-number">1.</span> <span class="nav-text">相关文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微信分享代码"><span class="nav-number">2.</span> <span class="nav-text">微信分享代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分享失败的可能原因"><span class="nav-number">4.</span> <span class="nav-text">分享失败的可能原因</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xu Ya</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
