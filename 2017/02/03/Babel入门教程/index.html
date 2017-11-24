@@ -367,10 +367,10 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install babel-core@5</span><br></pre></td></tr></table></figure>
 <p>运行上面的命令以后，就可以在当前目录的node_modules/babel-core/子目录里面，找到babel的浏览器版本browser.js（未精简）和browser.min.js（已精简）。</p>
 <p>然后，将下面的代码插入网页。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">"node_modules/babel-core/browser.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</span><br><span class="line"><span class="comment">// Your ES6 code</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">"node_modules/babel-core/browser.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</span><br><span class="line"><span class="comment">// Your ES6 code</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 <p>上面代码中，browser.js是Babel提供的转换器脚本，可以在浏览器运行。用户的ES6脚本放在script标签之中，但是要注明type=”text/babel”。</p>
 <p>另一种方法是使用babel-standalone模块提供的浏览器版本，将其插入网页。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</span><br><span class="line"><span class="comment">// Your ES6 code</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">"text/babel"</span>&gt;</span><br><span class="line"><span class="comment">// Your ES6 code</span></span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 <p>注意，网页中实时将ES6代码转为ES5，对性能会有影响。生产环境需要加载已经转码完成的脚本。</p>
 <p>下面是如何将代码打包成浏览器可以使用的脚本，以Babel配合Browserify为例。首先，安装babelify模块。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install --save-dev babelify babel-preset-es2015</span><br></pre></td></tr></table></figure>
@@ -404,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/02/HTML5新增标签和属性/" rel="next" title="HTML5新增标签和属性">
-                <i class="fa fa-chevron-left"></i> HTML5新增标签和属性
+              <a href="/2017/02/03/跨域及JSONP的原理/" rel="next" title="跨域及JSONP的原理">
+                <i class="fa fa-chevron-left"></i> 跨域及JSONP的原理
               </a>
             
           </div>
@@ -414,8 +414,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/03/跨域及JSONP的原理/" rel="prev" title="跨域及JSONP的原理">
-                跨域及JSONP的原理 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/08/AngularJS基础/" rel="prev" title="AngularJS基础">
+                AngularJS基础 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
