@@ -104,12 +104,28 @@ AngularJS 表达式 很像 JavaScript 表达式：它们可以包含文字、运
 ```html
 <html lang="en" ng-app='appModule'>
 ```
+
 ### ng-controller
 
 指定控制器的范围
 
 ```html
 <div ng-controller="appCtrl"></div>
+```
+
+### ng-model
+将表单元素的值绑定到应用程序上，也就是赋值给$scope
+
+```html
+<div>{{a}}</div>
+<input type="text" ng-model="a"/>
+```
+
+```javascript
+var app=angular.module("xApp",[]);
+app.controller("xCtrl",['$scope',function ($scope) {
+    $scope.a=1;
+}])
 ```
 
 ### ng-bind/ng-bind-template/ng-bind-html
@@ -170,7 +186,7 @@ app.controller('appCtrl',['$scope',function($scope){
 ```
 ### ng-repeat
 
-遍历数组或者对象
+对于集合中（数组中）的每个项会 克隆一次 HTML 元素
 
 ```html
 <ul>
