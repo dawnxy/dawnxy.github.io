@@ -77,17 +77,17 @@
 
 
 
-<meta name="description" content="null和undefined都代表没有，但是：  null是个空对象指针，表示属性存在，值不存在 而undefined表示未定义，连属性都不存在  console.log(document.parentNode);//null  因为一个页面中的document已经是最顶级元素了,它没有父亲console.log(do">
+<meta name="description" content="ng-model 指令用于绑定应用程序数据到 HTML 控制器(input, select, textarea)的值。  &amp;lt;!--双向数据绑定--&amp;gt;&amp;lt;div ng-init=&quot;name=&apos;xy&apos;&quot;&amp;gt;&amp;#123;&am">
 <meta property="og:type" content="article">
-<meta property="og:title" content="null与undefined的区别">
-<meta property="og:url" content="http://xuya.site/2016/11/13/null与undefined的区别/index.html">
+<meta property="og:title" content="AngularJS模型">
+<meta property="og:url" content="http://xuya.site/2017/11/27/AngularJS模型/index.html">
 <meta property="og:site_name" content="Xu Ya">
-<meta property="og:description" content="null和undefined都代表没有，但是：  null是个空对象指针，表示属性存在，值不存在 而undefined表示未定义，连属性都不存在  console.log(document.parentNode);//null  因为一个页面中的document已经是最顶级元素了,它没有父亲console.log(document.parentnode);//undefined  因为没有pare">
+<meta property="og:description" content="ng-model 指令用于绑定应用程序数据到 HTML 控制器(input, select, textarea)的值。  &amp;lt;!--双向数据绑定--&amp;gt;&amp;lt;div ng-init=&quot;name=&apos;xy&apos;&quot;&amp;gt;&amp;#123;&amp;#123;name&amp;#125;&amp;#125;&amp;lt;/div&amp;gt;&amp;lt;input type=&quot;text&quot; ng-model=&quot;name&quot;&amp;gt;&amp;lt;for">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-22T12:43:41.606Z">
+<meta property="og:updated_time" content="2017-11-27T09:26:32.517Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="null与undefined的区别">
-<meta name="twitter:description" content="null和undefined都代表没有，但是：  null是个空对象指针，表示属性存在，值不存在 而undefined表示未定义，连属性都不存在  console.log(document.parentNode);//null  因为一个页面中的document已经是最顶级元素了,它没有父亲console.log(document.parentnode);//undefined  因为没有pare">
+<meta name="twitter:title" content="AngularJS模型">
+<meta name="twitter:description" content="ng-model 指令用于绑定应用程序数据到 HTML 控制器(input, select, textarea)的值。  &amp;lt;!--双向数据绑定--&amp;gt;&amp;lt;div ng-init=&quot;name=&apos;xy&apos;&quot;&amp;gt;&amp;#123;&amp;#123;name&amp;#125;&amp;#125;&amp;lt;/div&amp;gt;&amp;lt;input type=&quot;text&quot; ng-model=&quot;name&quot;&amp;gt;&amp;lt;for">
 
 
 
@@ -117,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://xuya.site/2016/11/13/null与undefined的区别/"/>
+  <link rel="canonical" href="http://xuya.site/2017/11/27/AngularJS模型/"/>
 
 
 
 
 
-  <title>null与undefined的区别 | Xu Ya</title>
+  <title>AngularJS模型 | Xu Ya</title>
   
 
 
@@ -240,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xuya.site/2016/11/13/null与undefined的区别/">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2017/11/27/AngularJS模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xu Ya">
@@ -257,7 +257,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">null与undefined的区别</h1>
+          <h1 class="post-title" itemprop="name headline">AngularJS模型</h1>
         
 
         <div class="post-meta">
@@ -269,8 +269,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-13T18:44:20+08:00">
-                2016-11-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T18:44:20+08:00">
+                2017-11-27
               </time>
             
 
@@ -292,8 +292,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index">
+                    <span itemprop="name">AngularJS</span>
                   </a>
                 </span>
 
@@ -329,41 +329,19 @@
       
 
       
-        <p>null和undefined都代表没有，但是：</p>
+        <blockquote>
+<p>ng-model 指令用于绑定应用程序数据到 HTML 控制器(input, select, textarea)的值。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--双向数据绑定--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-init</span>=<span class="string">"name='xy'"</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ng-model</span>=<span class="string">"name"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"myForm"</span> <span class="attr">ng-init</span>=<span class="string">"myText = 'test@runoob.com'"</span>&gt;</span></span><br><span class="line">    Email:</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">name</span>=<span class="string">"myAddress"</span> <span class="attr">ng-model</span>=<span class="string">"myText"</span> <span class="attr">required</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--验证用户书输入--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">ng-show</span>=<span class="string">"myForm.myAddress.$error.email"</span>&gt;</span>不是一个合法的邮箱地址<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--应用状态--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>状态<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    &#123;&#123;myForm.myAddress.$valid&#125;&#125;<span class="comment">&lt;!--表单是否通过验证--&gt;</span></span><br><span class="line">    &#123;&#123;myForm.myAddress.$dirty&#125;&#125;<span class="comment">&lt;!--表单是否修改--&gt;</span></span><br><span class="line">    &#123;&#123;myForm.myAddress.$touched&#125;&#125;<span class="comment">&lt;!--用户是否和控件进行过交互--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*css类*/</span></span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.ng-valid</span> &#123;<span class="comment">/*验证通过*/</span></span><br><span class="line">    <span class="attribute">background-color</span>: lightblue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.ng-invalid</span> &#123;<span class="comment">/*验证不通过*/</span></span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.ng-empty</span> &#123;<span class="comment">/*内容为空*/</span></span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ng-model 指令根据表单域的状态添加/移除以下类：</p>
 <ul>
-<li>null是个空对象指针，表示属性存在，值不存在</li>
-<li>而undefined表示未定义，连属性都不存在</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">document</span>.parentNode);<span class="comment">//null  因为一个页面中的document已经是最顶级元素了,它没有父亲</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">document</span>.parentnode);<span class="comment">//undefined  因为没有parentnode属性</span></span><br></pre></td></tr></table></figure>
-<h1 id="null出现的场景"><a href="#null出现的场景" class="headerlink" title="null出现的场景"></a>null出现的场景</h1><ul>
-<li><p>设定一个变量,后期需要使用,那么前期我们设置默认值为null</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> timer=<span class="literal">null</span>;</span><br><span class="line">timer=setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">&#125;,<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在JS内存释放中，我们想释放一个堆内存，就让其值变为null即可</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=&#123;<span class="attr">name</span>:<span class="string">"xy"</span>&#125;;</span><br><span class="line">obj=<span class="literal">null</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>我们通过DOM中提供的属性和方法获取页面中的某一个元素标签，如果当前这个标签不存在，获取的结果是null，而不是undefined</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> oDiv=<span class="built_in">document</span>.getElementById(<span class="string">"div"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(oDiv);<span class="comment">//如果这个元素不存在，返回null</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在正则的exec捕获，或者字符串的match捕获中,如果当前要捕获的字符串和正则不匹配的话，捕获到的结果为null</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> reg=<span class="regexp">/\d+?/g</span>;</span><br><span class="line"><span class="keyword">var</span> str=<span class="string">"xy"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(reg.exec(str));<span class="comment">//null</span></span><br><span class="line"><span class="built_in">console</span>.log(str.match(reg));<span class="comment">//null</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>原型链的终点是null</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.__proto__);<span class="comment">//null</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="undefined出现的场景"><a href="#undefined出现的场景" class="headerlink" title="undefined出现的场景"></a>undefined出现的场景</h1><ul>
-<li><p>在JS预解释的时候，只声明未定义，默认的值是undefined</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="built_in">console</span>.log(a);<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在一个函数中，如果没有写return，或者return后啥都没返回，默认的返回值是undefined</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> res=fn();</span><br><span class="line"><span class="built_in">console</span>.log(res);<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>函数中设置了形参，但是执行的时候如果没有传递参数值，那么形参默认值是undefined</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params">a,b,c</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a,b,c);<span class="comment">//1 2 undefined</span></span><br><span class="line">&#125;</span><br><span class="line">say(<span class="number">1</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取一个对象的属性名对应的属性值，如果当前的这个属性名不存在的话，属性值默认是undefined,我们也应用这个道理来检测当前的浏览器是否兼容某一个方法</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> obj=&#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.name);<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></li>
+<li>ng-empty 内容为空  与之相对的是ng-not-empty</li>
+<li>ng-touched 控件已失去焦点 与之相对的是ng-untouched</li>
+<li>ng-valid 通过验证 与之相对的是ng-invalid</li>
+<li>ng-dirty 是否修改了表单 修改过为true，没有修改过为false</li>
+<li>ng-pristine 是否修改了表单 没有修改过为true，修改过为flase  pristine：意思是原始的</li>
+<li>ng-pending 满足 $asyncValidators 的情况</li>
 </ul>
 
       
@@ -389,8 +367,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/09/判断boolean真假/" rel="next" title="判断boolean真假">
-                <i class="fa fa-chevron-left"></i> 判断boolean真假
+              <a href="/2017/11/24/ng-model与ng-options/" rel="next" title="ng-model与ng-options">
+                <i class="fa fa-chevron-left"></i> ng-model与ng-options
               </a>
             
           </div>
@@ -398,10 +376,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/14/JavaScript的盒子模型属性及应用/" rel="prev" title="JavaScript的盒子模型属性及应用">
-                JavaScript的盒子模型属性及应用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -453,17 +427,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -520,22 +485,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null出现的场景"><span class="nav-number">1.</span> <span class="nav-text">null出现的场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined出现的场景"><span class="nav-number">2.</span> <span class="nav-text">undefined出现的场景</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
