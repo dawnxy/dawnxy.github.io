@@ -77,17 +77,17 @@
 
 
 
-<meta name="description" content="大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待, 安装1.使用npm安装:npm install mockjs; 2.直接引入&amp;lt">
+<meta name="description" content="大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待。 安装1.使用npm安装:npm install mockjs; 2.直接引入&amp;lt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mock.js生成随机数据">
 <meta property="og:url" content="http://xuya.site/2018/01/25/Mock生成随机数据/index.html">
 <meta property="og:site_name" content="Xu Ya">
-<meta property="og:description" content="大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待, 安装1.使用npm安装:npm install mockjs; 2.直接引入&amp;lt;script src=&amp;quot;http://mockjs.com/dist/moc">
+<meta property="og:description" content="大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待。 安装1.使用npm安装:npm install mockjs; 2.直接引入&amp;lt;script src=&amp;quot;http://mockjs.com/dist/moc">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-25T07:20:39.206Z">
+<meta property="og:updated_time" content="2018-01-25T07:27:41.960Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mock.js生成随机数据">
-<meta name="twitter:description" content="大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待, 安装1.使用npm安装:npm install mockjs; 2.直接引入&amp;lt;script src=&amp;quot;http://mockjs.com/dist/moc">
+<meta name="twitter:description" content="大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待。 安装1.使用npm安装:npm install mockjs; 2.直接引入&amp;lt;script src=&amp;quot;http://mockjs.com/dist/moc">
 
 
 
@@ -329,7 +329,7 @@
       
 
       
-        <p>大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待,</p>
+        <p>大家肯定遇到过，当后端 API 没有编写完成时，前端无法进行调试，这就导致了前端会被后端阻塞的情况。而Mock.js可以基于数据模板或HTML模板生成模拟随机数据，拦截并模拟ajax请求，可以让前端独立于后端进行开发，无需等待。</p>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>1.使用npm安装:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install mockjs;</span><br></pre></td></tr></table></figure></p>
 <p>2.直接引入<code>&lt;script src=&quot;http://mockjs.com/dist/mock.js&quot;&gt;&lt;/script&gt;</code>;</p>
 <h1 id="Mock-mock"><a href="#Mock-mock" class="headerlink" title="Mock.mock"></a>Mock.mock</h1><h2 id="Mock-mock-rurl-template"><a href="#Mock-mock-rurl-template" class="headerlink" title="Mock.mock( rurl, template )"></a>Mock.mock( rurl, template )</h2><p>当拦截到匹配 rurl 的 Ajax 请求时，将根据数据模板 template 生成模拟数据，并作为响应数据返回。</p>
@@ -339,6 +339,8 @@
 <h1 id="Mock-Random"><a href="#Mock-Random" class="headerlink" title="Mock.Random"></a>Mock.Random</h1><p>Mock.Random 是一个工具类，用于生成各种随机数据。</p>
 <p>Mock.Random 的方法在数据模板中称为『占位符』，书写格式为 @占位符(参数 [, 参数]) 。</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">Random.extend(&#123;</span><br><span class="line">    constellation: <span class="function"><span class="keyword">function</span>(<span class="params">date</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> constellations = [<span class="string">'白羊座'</span>, <span class="string">'金牛座'</span>, <span class="string">'双子座'</span>, <span class="string">'巨蟹座'</span>, <span class="string">'狮子座'</span>, <span class="string">'处女座'</span>, <span class="string">'天秤座'</span>, <span class="string">'天蝎座'</span>, <span class="string">'射手座'</span>, <span class="string">'摩羯座'</span>, <span class="string">'水瓶座'</span>, <span class="string">'双鱼座'</span>]</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.pick(constellations)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">Random.constellation()</span><br><span class="line"><span class="built_in">console</span>.log(Mock.mock(<span class="string">'@CONSTELLATION'</span>))</span><br></pre></td></tr></table></figure>
+<p>参考文档：<a href="https://github.com/nuysoft/Mock/wiki/Getting-Started" target="_blank" rel="noopener">https://github.com/nuysoft/Mock/wiki/Getting-Started</a></p>
+
       
     </div>
     

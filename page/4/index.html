@@ -240,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xuya.site/2017/02/03/Babel入门教程/">
+    <link itemprop="mainEntityOfPage" href="http://xuya.site/2017/02/03/跨域及JSONP的原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xu Ya">
@@ -259,7 +259,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/02/03/Babel入门教程/" itemprop="url">Babel入门教程</a></h1>
+                <a class="post-title-link" href="/2017/02/03/跨域及JSONP的原理/" itemprop="url">跨域及JSONP的原理</a></h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Babel/" itemprop="url" rel="index">
-                    <span itemprop="name">Babel</span>
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
                   </a>
                 </span>
 
@@ -333,17 +333,18 @@
       
         
           
-          什么是Babel?
+          JSON与JSONP
+JSON是一种数据交换格式
+而JSONP是一种依靠开发人员的聪明才智创造出的一种非官方跨域数据交互协议
 
-Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。
-
-这意味着，你可以现在就用ES6编写程序，而不用担心现有环境是否支持。下面是一个例子。
-// 转码前input.map(item =&gt; item + 1);    // 转码后input.map(function (item) &#123;  return item + 1;&#125;);
-上面的原始代码用了箭头函数，这个特性还没有得到广泛支持，Babel将其转为普通函数，就能在
+同源与非同源如果你请求数据的地址跟当前页面的地址，协议，域名，端口号，全部一致，就是同源，如果有一个不一致，就是非同源
+跨域的方式
+jsonp(最常用的方式)借用&lt;script&gt;标签的无跨域限制漏洞，来达到与第三方通讯的目的
+window.namewindow 对象的name属性是一个很特别的属性，当该window的location变化，然后重新加载，它的n
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/02/03/Babel入门教程/#more" rel="contents">
+            <a class="btn" href="/2017/02/03/跨域及JSONP的原理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
